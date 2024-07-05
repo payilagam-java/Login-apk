@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:textColor="#C6FF00"
         android:textSize="30dp"
-        android:text="Welcome to Adithya Finance"
+        android:text="Welcome to Adhiya Finance"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
