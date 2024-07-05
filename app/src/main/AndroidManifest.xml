@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.splash">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
@@ -13,19 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Splash"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
+
+        <!-- Activities -->
+        <activity android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".splashactivity"
+
+        <activity android:name=".splashactivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Define additional activities here -->
+        <activity android:name=".BorrowerActivity" />
+        <activity android:name=".ContactAddActivity" />
+
     </application>
 
 </manifest>

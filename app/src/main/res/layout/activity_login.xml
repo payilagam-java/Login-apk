@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AITYA FINANCE LTD"
+        android:text="ADHIYA FINANCE LTD"
         android:textAlignment="center"
         android:textSize="30dp"
         android:background="#18FFFF"
@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="login"
+                android:text="Login"
                 android:id="@+id/loginText"
                 android:textSize="36sp"
                 android:textAlignment="center"
@@ -98,7 +98,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:textStyle="bold"
-    android:text="Sign in to access your account"
+    android:text="Login in to access your account"
     android:textSize="14sp"
     android:textAlignment="center"
     android:id="@+id/logintext"
