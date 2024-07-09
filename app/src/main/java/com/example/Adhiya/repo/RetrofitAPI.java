@@ -1,7 +1,7 @@
-package com.example.splash.repo;
+package com.example.Adhiya.repo;
 
 
-import com.example.splash.modal.UserModal;
+import com.example.Adhiya.modal.UserModal;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

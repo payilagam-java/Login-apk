@@ -10,15 +10,15 @@
     android:id="@+id/main"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ADHIYA FINANCE LTD"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:background="#18FFFF"
-        android:textColor="@android:color/holo_purple"
-        android:textStyle="bold"/>
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="ADHIYA FINANCE LTD"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="30dp"-->
+<!--        android:background="#18FFFF"-->
+<!--        android:textColor="@android:color/holo_purple"-->
+<!--        android:textStyle="bold"/>-->
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

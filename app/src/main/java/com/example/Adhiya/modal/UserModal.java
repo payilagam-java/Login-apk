@@ -1,4 +1,4 @@
-package com.example.splash.modal;
+package com.example.Adhiya.modal;
 
 public class UserModal {
     private String UserId;

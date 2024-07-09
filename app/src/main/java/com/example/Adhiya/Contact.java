@@ -1,4 +1,4 @@
-package com.example.splash;
+package com.example.Adhiya;
 
 import androidx.annotation.NonNull;
 
