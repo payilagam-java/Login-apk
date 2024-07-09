@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        postData("Ad112","Arivu@123");
+       postData("Ad112","Arivu@123");
         // Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-            //    postData(enteredUsername,enteredPassword);
+             //  postData(enteredUsername,enteredPassword);
 
             }
         });

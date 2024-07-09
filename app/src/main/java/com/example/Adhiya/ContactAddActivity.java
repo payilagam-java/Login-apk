@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.splash.ContactDatabaseHelper;
 import com.example.splash.R;
 
 public class ContactAddActivity extends AppCompatActivity {
@@ -14,17 +15,17 @@ public class ContactAddActivity extends AppCompatActivity {
     private EditText editTextName;
     private EditText editTextContact;
 
-    private com.example.splash.ContactDatabaseHelper dbHelper;
+    private ContactDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_add_contact);
+        setContentView(R.layout.add_edit_borrower);
 
-        dbHelper = new com.example.splash.ContactDatabaseHelper(this);
+        dbHelper = new ContactDatabaseHelper(this);
 
-        editTextName = findViewById(R.id.editTextName);
-        editTextContact = findViewById(R.id.editTextContact);
+        editTextName = findViewById(R.id.editTextFirstName);
+        editTextContact = findViewById(R.id.editTextLastName);
         Button buttonSave = findViewById(R.id.buttonSave);
 
         buttonSave.setOnClickListener(v -> {
