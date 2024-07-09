@@ -1,0 +1,213 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!--EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:minHeight="48dp"
+        android:maxLines="1"
+        android:inputType="text"
+        android:ellipsize="end"/>
+
+    <EditText
+        android:id="@+id/editTextContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Number"
+        android:inputType="phone"
+        android:minHeight="48dp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save" /-->
+
+    <!-- Scrollable Content Area -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- First Name (mandatory) -->
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name *"
+                android:inputType="text"
+                android:importantForAccessibility="yes"
+                android:contentDescription="First Name"/>
+
+            <!-- Last Name -->
+            <EditText
+                android:id="@+id/editTextLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name"
+                android:inputType="text"/>
+
+            <!-- Date Of Birth (mandatory) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textViewDOBLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date of Birth *"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"/>
+
+                <EditText
+                    android:id="@+id/editTextDOB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints=""
+                    android:hint="Select Date"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:layout_below="@id/textViewDOBLabel"
+                    android:onClick="showDatePickerDialog"/>
+
+            </RelativeLayout>
+
+            <!-- Gender (mandatory) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textViewGenderLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender *"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"/>
+
+                <Spinner
+                    android:id="@+id/spinnerGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Gender"
+                    android:layout_below="@id/textViewGenderLabel"/>
+
+            </RelativeLayout>
+
+            <!-- Marital Status (mandatory) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/textViewMaritalStatusLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Marital Status *"
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"/>
+
+                <Spinner
+                    android:id="@+id/spinnerMaritalStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Select Marital Status"
+                    android:layout_below="@id/textViewMaritalStatusLabel"/>
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/textViewMaritalStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marital Status *"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"/>
+            <Spinner
+                android:id="@+id/spinnerBorrowerOccupation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Borrower Occupation *"/>
+
+            <!-- Referred By -->
+            <TextView
+                android:id="@+id/textViewMaritalStatusLabels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Referred By *"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"/>
+            <Spinner
+                android:id="@+id/spinnerReferredBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Referred By"/>
+
+            <!-- Choose Line (mandatory) -->
+            <TextView
+                android:id="@+id/textViewMaritalStatusLabelss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose Line *"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"/>
+
+            <Spinner
+                android:id="@+id/spinnerChooseLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Choose Line *"/>
+
+            <!-- Save and Cancel Buttons -->
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/buttonSave"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Save"
+                    tools:ignore="TextContrastCheck" />
+
+                <Button
+                    android:id="@+id/buttonCancel"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancel"
+                    tools:ignore="ButtonOrder,TextContrastCheck" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -10,13 +10,13 @@ public class ObjectModal {
 
     @SerializedName("object")
     @Expose
-    private BorrowerModal[] result;
+    private List<BorrowerModal> result;
 
-    public BorrowerModal[] getResult() {
+    public List<BorrowerModal> getResult() {
         return result;
     }
 
-    public void setResult(BorrowerModal[] result) {
+    public void setResult(List<BorrowerModal> result) {
         this.result = result;
     }
 }
