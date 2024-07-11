@@ -1,4 +1,4 @@
-package com.example.splash.modal;
+package com.example.Adhiya.modal;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

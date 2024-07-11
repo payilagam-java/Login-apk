@@ -14,14 +14,14 @@
                 android:supportsRtl="true"
                 android:theme="@style/Theme.Splash"
                 tools:targetApi="31">
-                <activity android:name=".BorrowerActivity" />
+                <activity android:name="com.example.Adhiya.BorrowerActivity" />
                 <activity android:name=".ContactAddActivity" />
                 <activity
-                    android:name=".MainActivity"
+                    android:name="com.example.Adhiya.MainActivity"
                     android:exported="false" />
 
                 <activity
-                    android:name=".splashactivity"
+                    android:name="com.example.Adhiya.splashactivity"
                     android:theme="@style/Theme.Design.NoActionBar"
                     android:exported="true">
                     <intent-filter>

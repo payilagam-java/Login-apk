@@ -1,4 +1,4 @@
-package com.example.splash;
+package com.example.Adhiya;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.splash.R;
 
 
 public class splashactivity extends AppCompatActivity {

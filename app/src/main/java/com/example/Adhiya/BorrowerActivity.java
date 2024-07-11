@@ -1,4 +1,4 @@
-package com.example.splash;
+package com.example.Adhiya;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,11 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.splash.modal.BorrowerModal;
-import com.example.splash.modal.ObjectModal;
-import com.example.splash.modal.UserModal;
+import com.example.Adhiya.modal.ObjectModal;
+import com.example.splash.R;
 import com.example.splash.network.ApiClient;
-import com.example.splash.repo.RetrofitAPI;
+import com.example.splash.Contact;
+import com.example.splash.ContactAddActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
@@ -34,10 +34,10 @@ public class BorrowerActivity extends AppCompatActivity {
 
     private ListView listView;
     private FloatingActionButton addContactButton;
-    private ContactDatabaseHelper dbHelper;
+  //  private ContactDatabaseHelper dbHelper;
     private ArrayAdapter<Contact> adapter;
     private List<Contact> contacts;
-    private RetrofitAPI retrofitAPI;
+    private com.example.splash.repo.RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
 
     @Override
@@ -88,9 +88,9 @@ public class BorrowerActivity extends AppCompatActivity {
     }
 
     private void displayContacts() {
-        contacts = dbHelper.getAllContacts();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
-        listView.setAdapter(adapter);
+      //  contacts = dbHelper.getAllContacts();
+    //    adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+    //    listView.setAdapter(adapter);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.Adhiya;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,18 +11,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.example.Adhiya.BorrowerActivity;
+import com.example.Adhiya.modal.UserModal;
 import com.example.splash.R;
+import com.example.splash.network.ApiClient;
+import com.example.splash.repo.RetrofitAPI;
 
-import java.util.HashMap;
+import org.json.JSONObject;
+
 import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
-
+    private RetrofitAPI retrofitAPI;
     // Dummy user credentials map (replace with your actual user authentication logic)
     private Map<String, String> userCredentials;
 
@@ -29,22 +38,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        postData("Ad112","Arivu@123");
         // Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
 
-        // Initialize user credentials (for demo purposes)
-        userCredentials = new HashMap<>();
-        userCredentials.put("user", "1234");
-        userCredentials.put("Arivu@123", "Ad112");
-        // Add more users as needed
-
         // Set click listener for login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 // Get entered username and password
                 String enteredUsername = usernameEditText.getText().toString().trim();
                 String enteredPassword = passwordEditText.getText().toString().trim();
@@ -60,27 +64,51 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Check if entered credentials are valid
-                if (userCredentials.containsKey(enteredUsername)) {
-                    if (userCredentials.get(enteredUsername).equals(enteredPassword)) {
-                        // Login successful
-                        Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+            //    postData(enteredUsername,enteredPassword);
 
-                        // Navigate to BorrowerActivity
-                        Intent borrowerIntent = new Intent(MainActivity.this, BorrowerActivity.class);
-                        borrowerIntent.putExtra("username", enteredUsername);
-                        startActivity(borrowerIntent);
+            }
+        });
+    }
+    private void postData(String name, String job) {
+        retrofitAPI = ApiClient.getApiLogin();
+        UserModal modal = new UserModal(name, job,"zdeftryuioplmnbhg");
+        Call<String> call = retrofitAPI.login(modal);
 
-                        // Finish MainActivity
-                        finish();
-                    } else {
-                        // Incorrect password
-                        Toast.makeText(MainActivity.this, "Incorrect Password", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // User not found
-                    Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_SHORT).show();
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+               if(response.code() == 200) {                // this method is called when we get response from our api.
+                   String responseFromAPI = response.body();
+                   SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                   SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+                   // write all the data entered by the user in SharedPreference and apply
+                   myEdit.putString("token", response.body());;
+                   myEdit.apply();
+                   //Toast.makeText(MainActivity.this, "Data added to API" + response.body(), Toast.LENGTH_SHORT).show();
+                   Intent borrowerIntent = new Intent(MainActivity.this, BorrowerActivity.class);
+                   startActivity(borrowerIntent);
+                   // Finish MainActivity
+                   finish();
+               }else{
+                   JSONObject jobj = new JSONObject();
+                   try {
+                       jobj = new JSONObject(response.errorBody().toString());
+                       Toast.makeText(MainActivity.this, "Data added to API " + jobj.get("title"), Toast.LENGTH_SHORT).show();
+                   } catch (Exception e) {
+                       Toast.makeText(MainActivity.this, "Something went wrong!! ", Toast.LENGTH_SHORT).show();
+                   }
                 }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                // setting text to our text view when
+                // we get error response from API.
+                //responseTV.setText("Error found is : " + t.getMessage());
+                Toast.makeText(MainActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }

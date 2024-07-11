@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:id="@+id/main"
-    tools:context=".MainActivity">
+    tools:context="com.example.Adhiya.MainActivity">
 
     <TextView
         android:layout_width="match_parent"
