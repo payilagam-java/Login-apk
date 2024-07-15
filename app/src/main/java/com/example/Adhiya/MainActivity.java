@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.Adhiya.BorrowerActivity;
 import com.example.Adhiya.modal.UserModal;
 import com.example.splash.R;
-import com.example.splash.network.ApiClient;
+import com.example.Adhiya.network.ApiClient;
 import com.example.splash.repo.RetrofitAPI;
 
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.example.splash.network;
+package com.example.Adhiya.network;
 
 import com.example.splash.repo.RetrofitAPI;
 import com.google.gson.Gson;
@@ -28,7 +28,7 @@ public class ApiClient {
     public static RetrofitAPI getApiClient(String token){
         OkHttpClient client = null;
         if(token !="") {
-            TokenInterceptor interceptor = new TokenInterceptor(token);
+            com.example.splash.network.TokenInterceptor interceptor = new com.example.splash.network.TokenInterceptor(token);
             client = new OkHttpClient.Builder()
                     .addInterceptor(interceptor)
                     .build();

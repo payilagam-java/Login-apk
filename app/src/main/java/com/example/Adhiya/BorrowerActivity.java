@@ -14,9 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.Adhiya.modal.ObjectModal;
 import com.example.splash.R;
-import com.example.splash.network.ApiClient;
+import com.example.Adhiya.network.ApiClient;
 import com.example.splash.Contact;
-import com.example.splash.ContactAddActivity;
+import com.example.Adhiya.ContactAddActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONObject;
@@ -34,7 +34,7 @@ public class BorrowerActivity extends AppCompatActivity {
 
     private ListView listView;
     private FloatingActionButton addContactButton;
-  //  private ContactDatabaseHelper dbHelper;
+    //  private ContactDatabaseHelper dbHelper;
     private ArrayAdapter<Contact> adapter;
     private List<Contact> contacts;
     private com.example.splash.repo.RetrofitAPI retrofitAPI;
@@ -45,7 +45,7 @@ public class BorrowerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower);
         getBorrowerList();
-       // dbHelper = new ContactDatabaseHelper(this);
+        // dbHelper = new ContactDatabaseHelper(this);
 
         listView = findViewById(R.id.contactsListView);
         addContactButton = findViewById(R.id.addContactButton);
@@ -59,7 +59,7 @@ public class BorrowerActivity extends AppCompatActivity {
         });
 
         // Display contacts when activity starts
-      //  displayContacts();
+        //  displayContacts();
     }
 
 
@@ -68,9 +68,9 @@ public class BorrowerActivity extends AppCompatActivity {
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         String token = sh.getString("token", "");
         retrofitAPI = ApiClient.getApiClient(token);
-      //  Toast.makeText(BorrowerActivity.this, "token added to API"+token, Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(BorrowerActivity.this, "token added to API"+token, Toast.LENGTH_SHORT).show();
         Call<ObjectModal> call = retrofitAPI.getBorrower("0");
-            call.enqueue(new Callback<ObjectModal>() {
+        call.enqueue(new Callback<ObjectModal>() {
             @Override
             public void onResponse(Call<ObjectModal> call, Response<ObjectModal> response) {
                 Toast.makeText(BorrowerActivity.this, "response added to API"+response.code(), Toast.LENGTH_SHORT).show();
@@ -88,9 +88,9 @@ public class BorrowerActivity extends AppCompatActivity {
     }
 
     private void displayContacts() {
-      //  contacts = dbHelper.getAllContacts();
-    //    adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
-    //    listView.setAdapter(adapter);
+        //  contacts = dbHelper.getAllContacts();
+        //    adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, contacts);
+        //    listView.setAdapter(adapter);
     }
 
     @Override
