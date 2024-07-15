@@ -7,7 +7,6 @@ import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
     final static String BASEURL = "http://arivukarasu-002-site1.ltempurl.com/";
