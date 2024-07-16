@@ -6,33 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!--EditText
-        android:id="@+id/editTextName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        android:minHeight="48dp"
-        android:maxLines="1"
-        android:inputType="text"
-        android:ellipsize="end"/>
 
-    <EditText
-        android:id="@+id/editTextContact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Contact Number"
-        android:inputType="phone"
-        android:minHeight="48dp"
-        android:maxLines="1"
-        android:ellipsize="end"/>
-
-    <Button
-        android:id="@+id/buttonSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save" /-->
-
-    <!-- Scrollable Content Area -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,24 +43,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
-                <TextView
-                    android:id="@+id/textViewDOBLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Date of Birth *"
-                    android:textStyle="bold"
-                    android:layout_alignParentTop="true"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/textViewDOBLabel"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Date of Birth *"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_alignParentTop="true"/>-->
 
-                <EditText
-                    android:id="@+id/editTextDOB"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints=""
-                    android:hint="Select Date"
-                    android:inputType="none"
-                    android:focusable="false"
-                    android:layout_below="@id/textViewDOBLabel"
-                    android:onClick="showDatePickerDialog"/>
+<!--                <EditText-->
+<!--                    android:id="@+id/editTextDOB"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:autofillHints=""-->
+<!--                    android:hint="Select Date"-->
+<!--                    android:inputType="none"-->
+<!--                    android:focusable="false"-->
+<!--                    android:layout_below="@id/textViewDOBLabel"-->
+<!--                    android:onClick="showDatePickerDialog"/>-->
 
             </RelativeLayout>
 
