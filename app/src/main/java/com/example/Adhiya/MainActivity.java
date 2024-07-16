@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-       postData("Ad112","Arivu@123");
+        postData("Ad112","Arivu@123");
         // Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
@@ -64,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-             //  postData(enteredUsername,enteredPassword);
+                Spinner genderSpinner = findViewById(R.id.spinnerGender);
+                String selectedGender = genderSpinner.getSelectedItem().toString();
+                Spinner Maritalspinner = findViewById(R.id.spinnerMaritalStatus);
+                String SelectMaritalStatus = genderSpinner.getSelectedItem().toString();
+
+                //  postData(enteredUsername,enteredPassword);
 
             }
         });
@@ -78,27 +84,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
 
-               if(response.code() == 200) {                // this method is called when we get response from our api.
-                   String responseFromAPI = response.body();
-                   SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-                   SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                if(response.code() == 200) {                // this method is called when we get response from our api.
+                    String responseFromAPI = response.body();
+                    SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-                   // write all the data entered by the user in SharedPreference and apply
-                   myEdit.putString("token", response.body());;
-                   myEdit.apply();
-                   //Toast.makeText(MainActivity.this, "Data added to API" + response.body(), Toast.LENGTH_SHORT).show();
-                   Intent borrowerIntent = new Intent(MainActivity.this, BorrowerActivity.class);
-                   startActivity(borrowerIntent);
-                   // Finish MainActivity
-                   finish();
-               }else{
-                   JSONObject jobj = new JSONObject();
-                   try {
-                       jobj = new JSONObject(response.errorBody().toString());
-                       Toast.makeText(MainActivity.this, "Data added to API " + jobj.get("title"), Toast.LENGTH_SHORT).show();
-                   } catch (Exception e) {
-                       Toast.makeText(MainActivity.this, "Something went wrong!! ", Toast.LENGTH_SHORT).show();
-                   }
+                    // write all the data entered by the user in SharedPreference and apply
+                    myEdit.putString("token", response.body());;
+                    myEdit.apply();
+                    //Toast.makeText(MainActivity.this, "Data added to API" + response.body(), Toast.LENGTH_SHORT).show();
+                    Intent borrowerIntent = new Intent(MainActivity.this, BorrowerActivity.class);
+                    startActivity(borrowerIntent);
+                    // Finish MainActivity
+                    finish();
+                }else{
+                    JSONObject jobj = new JSONObject();
+                    try {
+                        jobj = new JSONObject(response.errorBody().toString());
+                        Toast.makeText(MainActivity.this, "Data added to API " + jobj.get("title"), Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Something went wrong!! ", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

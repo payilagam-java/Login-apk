@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">Adhiya</string>
     <string name="cancel">Cancel</string>
+
+    <string-array name="gender_options">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="marital_status">
+        <item>select marital status</item>
+        <item>Not married</item>
+        <item>Married</item>
+        <item>Divorced</item>
+        <item>Widowed</item>
+        <item>Separated</item>
+    </string-array>
+
 </resources>
