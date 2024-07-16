@@ -76,7 +76,8 @@ public class BorrowerActivity extends AppCompatActivity {
                 Toast.makeText(BorrowerActivity.this, "response added to API"+response.code(), Toast.LENGTH_SHORT).show();
                 if(response.code() == 200) {                // this method is called when we get response from our api.
                     ObjectModal responseFromAPI = response.body();
-                    Log.d("success", "This is my message "+responseFromAPI.getResult().length);
+                    Log.d("success", "This is my message " + responseFromAPI.getResult().size());
+//                    Log.d("success", "This is my message "+responseFromAPI.getResult().length);
                 }
             }
 
