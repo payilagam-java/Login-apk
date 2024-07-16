@@ -25,7 +25,7 @@ public class ContactAddActivity extends AppCompatActivity {
         dbHelper = new ContactDatabaseHelper(this);
 
         editTextName = findViewById(R.id.editTextFirstName);
-        editTextContact = findViewById(R.id.editTextLastName);
+        editTextContact = findViewById(R.id.editTextLasttName);
         Button buttonSave = findViewById(R.id.buttonSave);
 
         buttonSave.setOnClickListener(v -> {

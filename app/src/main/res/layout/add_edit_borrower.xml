@@ -6,68 +6,73 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
+     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="175dp"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="16dp">
 
             <!-- First Name (mandatory) -->
-            <EditText
-                android:id="@+id/editTextFirstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="First Name *"
-                android:inputType="text"
-                android:importantForAccessibility="yes"
-                android:contentDescription="First Name"/>
-
-            <!-- Last Name -->
-            <EditText
-                android:id="@+id/editTextLastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Last Name"
-                android:inputType="text"/>
-
-            <!-- Date Of Birth (mandatory) -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginTop="8dp">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/textViewDOBLabel"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Date of Birth *"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:layout_alignParentTop="true"/>-->
+                <TextView
+                    android:id="@+id/FirstName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="First Name "
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp"
+                    android:layout_alignParentTop="true"/>
 
-<!--                <EditText-->
-<!--                    android:id="@+id/editTextDOB"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:autofillHints=""-->
-<!--                    android:hint="Select Date"-->
-<!--                    android:inputType="none"-->
-<!--                    android:focusable="false"-->
-<!--                    android:layout_below="@id/textViewDOBLabel"-->
-<!--                    android:onClick="showDatePickerDialog"/>-->
+                <EditText
+                    android:id="@+id/editTextFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name *"
+                    android:inputType="text"
+                    android:layout_marginTop="18dp"
+                    android:importantForAccessibility="yes"
+                    android:contentDescription="First Name"/>
 
             </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/LasttName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Last Name "
+                    android:textStyle="bold"
+                    android:layout_marginTop="1dp"
+                    android:layout_alignParentTop="true"/>
+
+                <EditText
+                    android:id="@+id/editTextLasttName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name *"
+                    android:inputType="text"
+                    android:layout_marginTop="18dp"
+                    android:importantForAccessibility="yes"
+                    android:contentDescription="First Name"/>
+
+            </RelativeLayout>
+
+            </LinearLayout>
 
             <!-- Gender (mandatory) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
                 android:layout_marginTop="8dp">
 
                 <TextView
@@ -91,6 +96,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
                 android:layout_marginTop="8dp">
 
                 <TextView
@@ -112,15 +118,17 @@
 
 
             <TextView
-                android:id="@+id/textViewMaritalStatusLabel"
+                android:id="@+id/MaritalStatusLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Marital Status *"
+                android:paddingLeft="16dp"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"/>
             <Spinner
                 android:id="@+id/spinnerBorrowerOccupation"
                 android:layout_width="match_parent"
+                android:paddingLeft="16dp"
                 android:layout_height="wrap_content"
                 android:hint="Borrower Occupation *"/>
 
@@ -129,12 +137,14 @@
                 android:id="@+id/textViewMaritalStatusLabels"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
                 android:text="Referred By *"
                 android:textStyle="bold"
                 android:layout_alignParentTop="true"/>
             <Spinner
                 android:id="@+id/spinnerReferredBy"
                 android:layout_width="match_parent"
+                android:paddingLeft="16dp"
                 android:layout_height="wrap_content"
                 android:hint="Referred By"/>
 
@@ -145,12 +155,14 @@
                 android:layout_height="wrap_content"
                 android:text="Choose Line *"
                 android:textStyle="bold"
+                android:paddingLeft="16dp"
                 android:layout_alignParentTop="true"/>
 
             <Spinner
                 android:id="@+id/spinnerChooseLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
                 android:hint="Choose Line *"/>
 
             <!-- Save and Cancel Buttons -->
@@ -182,6 +194,3 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
-</LinearLayout>
