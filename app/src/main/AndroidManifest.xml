@@ -21,7 +21,9 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.Splash" />
         <activity android:name="com.example.Adhiya.BorrowerActivity" />
-        <activity android:name="com.example.Adhiya.ContactAddActivity" />
+        <activity android:name="com.example.Adhiya.BorrowerAddActivity" />
+        <activity android:name="com.example.Adhiya.LoanActivity" />
+        <activity android:name="com.example.Adhiya.CollectionListActivity" />
         <activity
             android:name="com.example.Adhiya.MainActivity"
             android:exported="false" />

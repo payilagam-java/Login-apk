@@ -3,9 +3,24 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class BorrowerModal {
+public class BorrowerModal implements Serializable{
+
+
+        @SerializedName("object")
+        @Expose
+        private ArrayList<BorrowerModal> result;
+
+
+        public ArrayList<BorrowerModal> getResult() {
+            return result;
+        }
+        public void setResult(ArrayList<BorrowerModal> result) {
+            this.result = result;
+        }
 
     @SerializedName("id")
     @Expose
@@ -65,7 +80,7 @@ public class BorrowerModal {
 
     @SerializedName("lineId")
     @Expose
-    private int lineId;
+    private String lineId;
 
 
 
@@ -181,11 +196,11 @@ public class BorrowerModal {
         this.stateName = stateName;
     }
 
-    public int getLineId() {
+    public String getLineId() {
         return lineId;
     }
 
-    public void setLineId(int lineId) {
+    public void setLineId(String lineId) {
         this.lineId = lineId;
     }
 }

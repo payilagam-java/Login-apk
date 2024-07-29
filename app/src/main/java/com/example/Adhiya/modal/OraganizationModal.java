@@ -3,13 +3,28 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class OraganizationModal {
-	
+public class OraganizationModal implements Serializable {
+
+
+	@SerializedName("object")
+	@Expose
+	private ArrayList<OraganizationModal> result;
+
+
+	public ArrayList<OraganizationModal> getResult() {
+		return result;
+	}
+	public void setResult(ArrayList<OraganizationModal> result) {
+		this.result = result;
+	}
+
 	@SerializedName("id")
     @Expose
-	private int id;
+	private String id;
 
 	@SerializedName("organizationId")
     @Expose
@@ -63,11 +78,11 @@ public class OraganizationModal {
     @Expose
 	private int pincode;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -3,7 +3,23 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CollectionModal {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class CollectionModal implements Serializable {
+
+
+    @SerializedName("object")
+    @Expose
+    private ArrayList<CollectionModal> result;
+
+
+    public ArrayList<CollectionModal> getResult() {
+        return result;
+    }
+    public void setResult(ArrayList<CollectionModal> result) {
+        this.result = result;
+    }
 
     @SerializedName("id")
     @Expose
@@ -13,59 +29,49 @@ public class CollectionModal {
     @Expose
     private String borrowerId;
 
-    @SerializedName("firstName")
+    @SerializedName("borrowerName")
     @Expose
-    private String firstName;
-
-    @SerializedName("lastName")
-    @Expose
-    private String lastName;
-
-    @SerializedName("dob")
-    @Expose
-    private String dob;
-
-    @SerializedName("gender")
-    @Expose
-    private String gender;
-
-    @SerializedName("maritialStatus")
-    @Expose
-    private String maritialStatus;
-
-    @SerializedName("mobileNubmer")
-    @Expose
-    private String mobileNubmer;
-
-    @SerializedName("borrowerStatus")
-    @Expose
-    private String borrowerStatus;
-
-    @SerializedName("borrowerOccupation")
-    @Expose
-    private String borrowerOccupation;
-
-    @SerializedName("refferedBy")
-    @Expose
-    private String refferedBy;
-
-    @SerializedName("countryName")
-    @Expose
-    private String countryName;
-
-    @SerializedName("cityName")
-    @Expose
-    private String cityName;
-
-    @SerializedName("stateName")
-    @Expose
-    private String stateName;
+    private String borrowerName;
 
     @SerializedName("lineId")
     @Expose
     private int lineId;
 
+    @SerializedName("lineName")
+    @Expose
+    private String lineName;
 
+    @SerializedName("loanId")
+    @Expose
+    private String loanId;
+
+    @SerializedName("amountofPaid")
+    @Expose
+    private String amountofPaid;
+
+    @SerializedName("dateOfPaid")
+    @Expose
+    private String dateOfPaid;
+
+    @SerializedName("loanAmount")
+    @Expose
+    private String loanAmount;
+
+    @SerializedName("payAmount")
+    @Expose
+    private String payAmount;
+
+    @SerializedName("paymentMode")
+    @Expose
+    private String paymentMode;
+
+    @SerializedName("payableAmount")
+    @Expose
+    private String payableAmount;
+
+    @SerializedName("balance")
+    @Expose
+    private String balance;
 
     public int getId() {
         return id;
@@ -83,100 +89,12 @@ public class CollectionModal {
         this.borrowerId = borrowerId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getBorrowerName() {
+        return borrowerName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getMaritialStatus() {
-        return maritialStatus;
-    }
-
-    public void setMaritialStatus(String maritialStatus) {
-        this.maritialStatus = maritialStatus;
-    }
-
-    public String getMobileNubmer() {
-        return mobileNubmer;
-    }
-
-    public void setMobileNubmer(String mobileNubmer) {
-        this.mobileNubmer = mobileNubmer;
-    }
-
-    public String getBorrowerStatus() {
-        return borrowerStatus;
-    }
-
-    public void setBorrowerStatus(String borrowerStatus) {
-        this.borrowerStatus = borrowerStatus;
-    }
-
-    public String getBorrowerOccupation() {
-        return borrowerOccupation;
-    }
-
-    public void setBorrowerOccupation(String borrowerOccupation) {
-        this.borrowerOccupation = borrowerOccupation;
-    }
-
-    public String getRefferedBy() {
-        return refferedBy;
-    }
-
-    public void setRefferedBy(String refferedBy) {
-        this.refferedBy = refferedBy;
-    }
-
-    public String getCountryName() {
-        return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getStateName() {
-        return stateName;
-    }
-
-    public void setStateName(String stateName) {
-        this.stateName = stateName;
+    public void setBorrowerName(String borrowerName) {
+        this.borrowerName = borrowerName;
     }
 
     public int getLineId() {
@@ -185,5 +103,77 @@ public class CollectionModal {
 
     public void setLineId(int lineId) {
         this.lineId = lineId;
+    }
+
+    public String getLineName() {
+        return lineName;
+    }
+
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
+
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
+    }
+
+    public String getAmountofPaid() {
+        return amountofPaid;
+    }
+
+    public void setAmountofPaid(String amountofPaid) {
+        this.amountofPaid = amountofPaid;
+    }
+
+    public String getDateOfPaid() {
+        return dateOfPaid;
+    }
+
+    public void setDateOfPaid(String dateOfPaid) {
+        this.dateOfPaid = dateOfPaid;
+    }
+
+    public String getLoanAmount() {
+        return loanAmount;
+    }
+
+    public void setLoanAmount(String loanAmount) {
+        this.loanAmount = loanAmount;
+    }
+
+    public String getPayAmount() {
+        return payAmount;
+    }
+
+    public void setPayAmount(String payAmount) {
+        this.payAmount = payAmount;
+    }
+
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
+    public String getPayableAmount() {
+        return payableAmount;
+    }
+
+    public void setPayableAmount(String payableAmount) {
+        this.payableAmount = payableAmount;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 }

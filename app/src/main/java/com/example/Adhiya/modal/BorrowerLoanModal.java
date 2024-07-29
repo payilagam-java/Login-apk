@@ -5,7 +5,18 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class BorrowerLoanModal {
+public class BorrowerLoanModal  {
+	@SerializedName("object")
+	@Expose
+	private List<BorrowerLoanModal> loan;
+
+	public List<BorrowerLoanModal> getLoan() {
+		return loan;
+	}
+
+	public void setLoan(List<BorrowerLoanModal> result) {
+		this.loan = loan;
+	}
 	
 	@SerializedName("id")
     @Expose

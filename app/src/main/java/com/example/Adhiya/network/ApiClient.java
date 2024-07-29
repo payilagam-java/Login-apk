@@ -1,11 +1,12 @@
 package com.example.Adhiya.network;
 
 import com.example.Adhiya.network.TokenInterceptor;
-import com.example.splash.repo.RetrofitAPI;
+import com.example.Adhiya.repo.RetrofitAPI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -26,14 +27,18 @@ public class ApiClient {
     }
 
     public static RetrofitAPI getApiClient(String token){
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = null;
         if(token !="") {
-            com.example.Adhiya.network.TokenInterceptor interceptor = new com.example.Adhiya.network.TokenInterceptor(token);
+            TokenInterceptor interceptor = new TokenInterceptor(token);
             client = new OkHttpClient.Builder()
                     .addInterceptor(interceptor)
+                    .addInterceptor(logging)
                     .build();
         }
-
         retrofit = new Retrofit.Builder()
                 .client(client)
                 .baseUrl(BASEURL)
