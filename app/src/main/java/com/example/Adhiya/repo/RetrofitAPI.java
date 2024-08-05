@@ -4,6 +4,7 @@ package com.example.Adhiya.repo;
 import com.example.Adhiya.modal.BorrowerLoanModal;
 import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.CollectionModal;
+import com.example.Adhiya.modal.ExpenseModal;
 import com.example.Adhiya.modal.LineModal;
 import com.example.Adhiya.modal.ObjectModal;
 import com.example.Adhiya.modal.OraganizationModal;
@@ -28,8 +29,6 @@ public interface RetrofitAPI {
     Call<ResponseModal> addEditBorrower(@Body BorrowerModal borrowerModal);
 
 
-
-
     @POST("api/Organization/GetOrganization")
     @Headers({"Content-Type: application/json"})
     Call<OraganizationModal> getCollection(@Body String body);
@@ -42,8 +41,25 @@ public interface RetrofitAPI {
     @Headers({"Content-Type: application/json"})
     Call<BorrowerLoanModal> getLoan(@Body String body);
 
+    @POST("api/Loan/InsertUpdateBorrowerLoan")
+    @Headers({"Content-Type: application/json"})
+    Call<ResponseModal> addEditLoan(@Body BorrowerLoanModal body);
 
     @POST("api/Collection/GetCollection")
     @Headers({"Content-Type: application/json"})
     Call<CollectionModal> getCollect(@Body SendCollection dataModal);
+
+    @POST("api/Collection/InsertUpdateCollection")
+    @Headers({"Content-Type: application/json"})
+    Call<ResponseModal> payment(@Body CollectionModal CollectionModal);
+
+
+    /*EXPENSE*/
+    @POST("api/Collection/GetLineExpense")
+    @Headers({"Content-Type: application/json"})
+    Call<ExpenseModal> getExpense(@Body String dataModal);
+
+    @POST("api/Collection/InsertUpdateExpense")
+    @Headers({"Content-Type: application/json"})
+    Call<ResponseModal> addEditExpense(@Body ExpenseModal body);
 }

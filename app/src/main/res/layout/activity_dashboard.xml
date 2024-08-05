@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:title="Dashboard"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="center"
+android:orientation="horizontal">
+<androidx.cardview.widget.CardView
+    android:id="@+id/borrower"
+android:layout_width="180dp"
+android:layout_height="180dp"
+app:cardElevation="10dp"
+app:cardCornerRadius="20dp"
+
+app:cardBackgroundColor="@color/white"
+app:cardMaxElevation="12dp"
+app:cardPreventCornerOverlap="true"
+app:cardUseCompatPadding="true"
+>
+
+<ImageView
+android:layout_width="60dp"
+android:layout_height="60dp"
+android:layout_gravity="center"
+android:src="@drawable/baseline_person_24"
+android:layout_marginBottom="10dp"
+android:id="@+id/imgBorrower"
+android:contentDescription="@string/app_name" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Borrower"
+android:layout_gravity="bottom|center_horizontal"
+android:layout_marginTop="50dp"
+android:layout_marginBottom="20dp"
+android:textSize="20sp"
+android:textStyle="bold"
+/>
+
+</androidx.cardview.widget.CardView>
+<androidx.cardview.widget.CardView
+android:layout_width="180dp"
+android:layout_height="180dp"
+app:cardElevation="10dp"
+app:cardCornerRadius="20dp"
+app:cardBackgroundColor="@color/white"
+app:cardMaxElevation="12dp"
+app:cardPreventCornerOverlap="true"
+app:cardUseCompatPadding="true"
+    android:id="@+id/loan"
+>
+<ImageView
+android:layout_width="60dp"
+android:layout_height="60dp"
+android:layout_gravity="center"
+android:src="@drawable/baseline_work_24"
+android:id="@+id/imgLoan"
+android:layout_marginBottom="10dp"
+android:contentDescription="@string/app_name" />
+
+<TextView
+android:paddingTop="10dp"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Loan"
+android:layout_gravity="bottom|center_horizontal"
+android:layout_marginTop="70dp"
+android:layout_marginBottom="20dp"
+android:textSize="20sp"
+android:textStyle="bold"
+/>
+</androidx.cardview.widget.CardView>
+</LinearLayout>
+
+
+<LinearLayout
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="center"
+android:orientation="horizontal">
+<androidx.cardview.widget.CardView
+android:layout_width="180dp"
+android:layout_height="180dp"
+app:cardElevation="10dp"
+app:cardCornerRadius="20dp"
+    android:id="@+id/collection"
+app:cardBackgroundColor="@color/white"
+app:cardMaxElevation="12dp"
+app:cardPreventCornerOverlap="true"
+app:cardUseCompatPadding="true"
+>
+
+<ImageView
+android:layout_width="60dp"
+android:layout_height="60dp"
+android:layout_gravity="center"
+android:src="@drawable/baseline_date_range_24"
+android:layout_marginBottom="10dp"
+android:id="@+id/imgCollection"
+android:contentDescription="@string/app_name" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Collection"
+android:layout_gravity="bottom|center_horizontal"
+android:layout_marginTop="50dp"
+android:layout_marginBottom="20dp"
+android:textSize="20sp"
+android:textStyle="bold"
+/>
+
+</androidx.cardview.widget.CardView>
+<androidx.cardview.widget.CardView
+android:layout_width="180dp"
+android:layout_height="180dp"
+app:cardElevation="10dp"
+app:cardCornerRadius="20dp"
+app:cardBackgroundColor="@color/white"
+app:cardMaxElevation="12dp"
+app:cardPreventCornerOverlap="true"
+app:cardUseCompatPadding="true"
+    android:id="@+id/expense"
+>
+<ImageView
+android:layout_width="60dp"
+android:layout_height="60dp"
+android:layout_gravity="center"
+android:src="@drawable/baseline_history_24"
+android:id="@+id/imgExpense"
+android:layout_marginBottom="10dp"/>
+
+<TextView
+android:paddingTop="10dp"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Expense"
+android:layout_gravity="bottom|center_horizontal"
+android:layout_marginTop="70dp"
+android:layout_marginBottom="20dp"
+android:textSize="20sp"
+android:textStyle="bold"
+/>
+</androidx.cardview.widget.CardView>
+</LinearLayout>
+</LinearLayout>

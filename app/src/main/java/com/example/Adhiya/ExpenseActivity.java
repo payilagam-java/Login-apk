@@ -14,13 +14,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.Adhiya.adapter.BorrowerAdapter;
+import com.example.Adhiya.adapter.ExpenseAdapter;
 import com.example.Adhiya.modal.BorrowerModal;
-import com.example.Adhiya.modal.CollectionModal;
+import com.example.Adhiya.modal.ExpenseModal;
+import com.example.Adhiya.network.ApiClient;
 import com.example.Adhiya.repo.RetrofitAPI;
 import com.example.Adhiya.util.ProgressUtil;
-import com.example.splash.R;
-import com.example.Adhiya.network.ApiClient;
 import com.example.splash.Contact;
+import com.example.splash.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BorrowerActivity extends AppCompatActivity {
+public class ExpenseActivity extends AppCompatActivity {
 
     private ListView listView;
     private FloatingActionButton addContactButton;
@@ -39,38 +40,31 @@ public class BorrowerActivity extends AppCompatActivity {
     private List<Contact> contacts;
     private RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
-    List<BorrowerModal> b;
+    List<ExpenseModal> b;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_borrower);
-        getBorrowerList();
-        // dbHelper = new ContactDatabaseHelper(this);
-
+        setContentView(R.layout.activity_expense);
         listView = findViewById(R.id.contactsListView);
+        getExpenseList();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id)
             {
 
-                BorrowerModal cm = b.get(position);
-                Intent intent = new Intent(BorrowerActivity.this, BorrowerAddActivity.class);
-                Bundle args = new Bundle();
-                args.putSerializable("borrower",(Serializable)cm);
-                intent.putExtra("EDIT",args);
-                startActivity(intent);
+//                ExpenseModal cm = b.get(position);
+//                Intent intent = new Intent(ExpenseActivity.this, ExpenseAddActivity.class);
+//                startActivity(intent);
             }
         });
-
         addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BorrowerActivity.this, BorrowerAddActivity.class);
+                Intent intent = new Intent(ExpenseActivity.this, ExpenseAddActivity.class);
                 startActivity(intent);
             }
         });
-
     }
     @Override
     public void onRestart()
@@ -80,30 +74,30 @@ public class BorrowerActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    private void getBorrowerList(){
+    private void getExpenseList(){
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
         String token = sh.getString("token", "");
         retrofitAPI = ApiClient.getApiClient(token);
-        Dialog dialog = ProgressUtil.showProgress(BorrowerActivity.this);
+        Dialog dialog = ProgressUtil.showProgress(ExpenseActivity.this);
 
-        Call<BorrowerModal> call = retrofitAPI.getBorrower("0");
-        call.enqueue(new Callback<BorrowerModal>() {
+        Call<ExpenseModal> call = retrofitAPI.getExpense("0");
+        call.enqueue(new Callback<ExpenseModal>() {
             @Override
-            public void onResponse(Call<BorrowerModal> call, Response<BorrowerModal> response) {
+            public void onResponse(Call<ExpenseModal> call, Response<ExpenseModal> response) {
                 dialog.dismiss();
             if(response.code() == 200) {                // this method is called when we get response from our api.
-                    BorrowerModal responseFromAPI = response.body();
+                ExpenseModal responseFromAPI = response.body();
                     b = responseFromAPI.getResult();
-                    BorrowerAdapter adapter = new BorrowerAdapter(BorrowerActivity.this, b);
+                ExpenseAdapter adapter = new ExpenseAdapter(ExpenseActivity.this, b);
                     ListView listView = (ListView) findViewById(R.id.contactsListView);
                     listView.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<BorrowerModal> call, Throwable t) {
-                Toast.makeText(BorrowerActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ExpenseModal> call, Throwable t) {
+                Toast.makeText(ExpenseActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -114,8 +108,5 @@ public class BorrowerActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_ADD_CONTACT && resultCode == RESULT_OK) {
-            getBorrowerList();
-        }
     }
 }

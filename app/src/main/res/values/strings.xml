@@ -12,12 +12,10 @@
         <item>Married</item>
     </string-array>
 
-    <string-array name="mode">
-        <item>CashOnHand</item>
-        <item>GPay</item>
-        <item>PhonePay</item>
-        <item>NetBanking</item>
-        <item>OtherUPI</item>
+    <string-array name="status">
+        <item>Active</item>
+        <item>Default</item>
+        <item>Closed</item>
 
     </string-array>
 

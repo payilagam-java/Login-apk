@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-       postData("Ad112","Arivu@123");
+      // postData("Ad111","arivu");
         // Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-          //    postData(enteredUsername,enteredPassword);
+           postData(enteredUsername,enteredPassword);
 
             }
         });
     }
-    private void postData(String name, String job) {
+    private void postData(String name, String pass) {
         retrofitAPI = ApiClient.getApiLogin();
-        UserModal modal = new UserModal(name, job,"zdeftryuioplmnbhg");
+        UserModal modal = new UserModal(name, pass,"zdeftryuioplmnbhg");
         Call<String> call = retrofitAPI.login(modal);
         Dialog dialog = ProgressUtil.showProgress(MainActivity.this);
         call.enqueue(new Callback<String>() {
@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                    SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
                    // write all the data entered by the user in SharedPreference and apply
-                   myEdit.putString("token", response.body());;
+                   myEdit.putString("token", responseFromAPI);;
                    myEdit.apply();
                    //Toast.makeText(MainActivity.this, "Data added to API" + response.body(), Toast.LENGTH_SHORT).show();
-                   Intent borrowerIntent = new Intent(MainActivity.this, CollectionActivity.class);
+                   Intent borrowerIntent = new Intent(MainActivity.this, DashboardActivity.class);
                    startActivity(borrowerIntent);
                    // Finish MainActivity
                    finish();

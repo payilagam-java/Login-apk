@@ -70,7 +70,7 @@
                 android:drawablePadding="8dp"
                 android:hint="Password"
                 android:maxLines="1"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:ellipsize="end"
                 android:padding="8dp"
                 android:textColor="@color/black"

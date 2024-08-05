@@ -7,12 +7,67 @@
     android:padding="10dp" >
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Borrower Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/borrowerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Borrower Name"
+        android:layout_marginBottom="10dp"/>
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Line Name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/lineName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Line Name"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loan Amount"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/payableAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loan Amount"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Balance"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loan Amount"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pay Amount"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <EditText
         android:id="@+id/editPayAmount"
         android:layout_width="match_parent"
@@ -20,19 +75,27 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView2"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pay Mode"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-
     <Spinner
         android:id="@+id/spinnerMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
         android:layout_marginTop="15dp"
-        android:entries="@array/mode"
-        android:hint="Select Gender" />
+        android:hint="Select Payment mode" />
+
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/pay"
+        style="?android:attr/absListViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Pay" />
 </LinearLayout>

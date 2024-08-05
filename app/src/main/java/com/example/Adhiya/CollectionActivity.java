@@ -1,5 +1,6 @@
 package com.example.Adhiya;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -57,8 +58,10 @@ public class CollectionActivity extends AppCompatActivity {
     private RetrofitAPI retrofitAPI;
     private OraganizationModal orgModal = new OraganizationModal();
     private LineModal lineModal = new LineModal();
+    private Button borrowerButton;
 
     private SendCollection sendCollection = new SendCollection();
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +87,8 @@ public class CollectionActivity extends AppCompatActivity {
         collDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // on below line we are getting
-                // the instance of our calendar.
                 final Calendar c = Calendar.getInstance();
 
-                // on below line we are getting
-                // our day, month and year.
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
@@ -107,11 +106,9 @@ public class CollectionActivity extends AppCompatActivity {
                                 sendCollection.setCollectiondate(year+"-"+(monthOfYear + 1) +"-"+dayOfMonth);
                             }
                         },
-                        // on below line we are passing year,
-                        // month and day for selected date in our date picker.
+
                         year, month, day);
-                // at last we are calling show to
-                // display our date picker dialog.
+
                 datePickerDialog.show();
             }
         });
@@ -124,6 +121,8 @@ public class CollectionActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     private void postData( ){
@@ -161,7 +160,7 @@ public class CollectionActivity extends AppCompatActivity {
         String token = sh.getString("token", "");
         retrofitAPI = ApiClient.getApiClient(token);
         Dialog dialog1 = ProgressUtil.showProgress(CollectionActivity.this);
-        Call<OraganizationModal> call = retrofitAPI.getCollection("1");
+        Call<OraganizationModal> call = retrofitAPI.getCollection("0");
         call.enqueue(new Callback<OraganizationModal>() {
             @Override
             public void onResponse(Call<OraganizationModal> call, Response<OraganizationModal> response) {
@@ -210,7 +209,7 @@ public class CollectionActivity extends AppCompatActivity {
         String token = sh.getString("token", "");
         retrofitAPI = ApiClient.getApiClient(token);
         Dialog dialog1 = ProgressUtil.showProgress(CollectionActivity.this);
-        Call<LineModal> call = retrofitAPI.getLine("1");
+        Call<LineModal> call = retrofitAPI.getLine("0");
         call.enqueue(new Callback<LineModal>() {
             @Override
             public void onResponse(Call<LineModal> call, Response<LineModal> response) {

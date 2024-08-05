@@ -16,16 +16,19 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="Borrower"
+        app:title="collection"
         app:titleTextColor="@android:color/white" />
 
   </com.google.android.material.appbar.AppBarLayout>
+
   <ScrollView
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:padding="10dp"
       android:fillViewport="false">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,7 +73,7 @@
             android:id="@+id/spinnerLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Organization"
+            android:hint="Select Line"
             android:layout_marginTop="30dp"/>
       </RelativeLayout>
 
@@ -89,7 +92,7 @@
             android:id="@+id/editTextDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Organization"
+            android:hint="Select Date"
             android:layout_marginTop="30dp"/>
 
       </RelativeLayout>

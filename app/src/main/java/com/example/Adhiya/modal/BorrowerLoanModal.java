@@ -26,9 +26,9 @@ public class BorrowerLoanModal  {
     @Expose
 	private String borrowerId;
 	
-	@SerializedName("bId")
+	@SerializedName("BId")
     @Expose
-	private int bId;
+	private String BId;
 	
 	@SerializedName("borrowerName")
     @Expose
@@ -36,7 +36,7 @@ public class BorrowerLoanModal  {
 	
 	@SerializedName("loanId")
     @Expose
-	private int loanId;
+	private String loanId;
 	
 	@SerializedName("organizationId")
     @Expose
@@ -48,7 +48,7 @@ public class BorrowerLoanModal  {
 	
 	@SerializedName("lineId")
     @Expose
-	private int lineId;
+	private String lineId;
 	
 	@SerializedName("lineName")
     @Expose
@@ -56,15 +56,15 @@ public class BorrowerLoanModal  {
 	
 	@SerializedName("loanAmount")
     @Expose
-	private double loanAmount;
+	private String loanAmount;
 	
 	@SerializedName("disbursedAmount")
     @Expose
-	private double disbursedAmount;
+	private String disbursedAmount;
 	
 	@SerializedName("payableAmount")
     @Expose
-	private double payableAmount;
+	private String payableAmount;
 	
 	@SerializedName("disbursedDate")
     @Expose
@@ -100,15 +100,15 @@ public class BorrowerLoanModal  {
 	
 	@SerializedName("deductedAmount")
     @Expose
-	private double deductedAmount;
+	private String deductedAmount;
 	
 	@SerializedName("interestAmount")
     @Expose
-	private double interestAmount;
+	private String interestAmount;
 	
 	@SerializedName("payAmount")
     @Expose
-	private double payAmount;
+	private String payAmount;
 	
 	@SerializedName("interestPercentage")
     @Expose
@@ -146,12 +146,12 @@ public class BorrowerLoanModal  {
 		this.borrowerId = borrowerId;
 	}
 
-	public int getbId() {
-		return bId;
+	public String getBId() {
+		return BId;
 	}
 
-	public void setbId(int bId) {
-		this.bId = bId;
+	public void setBId(String BId) {
+		this.BId = BId;
 	}
 
 	public String getBorrowerName() {
@@ -162,11 +162,11 @@ public class BorrowerLoanModal  {
 		this.borrowerName = borrowerName;
 	}
 
-	public int getLoanId() {
+	public String getLoanId() {
 		return loanId;
 	}
 
-	public void setLoanId(int loanId) {
+	public void setLoanId(String loanId) {
 		this.loanId = loanId;
 	}
 
@@ -186,11 +186,11 @@ public class BorrowerLoanModal  {
 		this.organizationName = organizationName;
 	}
 
-	public int getLineId() {
+	public String getLineId() {
 		return lineId;
 	}
 
-	public void setLineId(int lineId) {
+	public void setLineId(String lineId) {
 		this.lineId = lineId;
 	}
 
@@ -202,27 +202,27 @@ public class BorrowerLoanModal  {
 		this.lineName = lineName;
 	}
 
-	public double getLoanAmount() {
+	public String getLoanAmount() {
 		return loanAmount;
 	}
 
-	public void setLoanAmount(double loanAmount) {
+	public void setLoanAmount(String loanAmount) {
 		this.loanAmount = loanAmount;
 	}
 
-	public double getDisbursedAmount() {
+	public String getDisbursedAmount() {
 		return disbursedAmount;
 	}
 
-	public void setDisbursedAmount(double disbursedAmount) {
+	public void setDisbursedAmount(String disbursedAmount) {
 		this.disbursedAmount = disbursedAmount;
 	}
 
-	public double getPayableAmount() {
+	public String getPayableAmount() {
 		return payableAmount;
 	}
 
-	public void setPayableAmount(double payableAmount) {
+	public void setPayableAmount(String payableAmount) {
 		this.payableAmount = payableAmount;
 	}
 
@@ -290,27 +290,27 @@ public class BorrowerLoanModal  {
 		this.duration = duration;
 	}
 
-	public double getDeductedAmount() {
+	public String getDeductedAmount() {
 		return deductedAmount;
 	}
 
-	public void setDeductedAmount(double deductedAmount) {
+	public void setDeductedAmount(String deductedAmount) {
 		this.deductedAmount = deductedAmount;
 	}
 
-	public double getInterestAmount() {
+	public String getInterestAmount() {
 		return interestAmount;
 	}
 
-	public void setInterestAmount(double interestAmount) {
+	public void setInterestAmount(String interestAmount) {
 		this.interestAmount = interestAmount;
 	}
 
-	public double getPayAmount() {
+	public String getPayAmount() {
 		return payAmount;
 	}
 
-	public void setPayAmount(double payAmount) {
+	public void setPayAmount(String payAmount) {
 		this.payAmount = payAmount;
 	}
 

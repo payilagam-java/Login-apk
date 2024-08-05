@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BorrowerModal implements Serializable{
+public class BorrowerModal implements Serializable,ParentModal{
 
 
         @SerializedName("object")

@@ -33,7 +33,7 @@ public class LoanActivity extends AppCompatActivity {
     private List<Contact> contacts;
     private RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
-  private static String body = "0";
+    private static String body = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,17 @@ public class LoanActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoanActivity.this, BorrowerAddActivity.class);
-                startActivityForResult(intent, REQUEST_ADD_CONTACT);
+                Intent intent = new Intent(LoanActivity.this, LoanAddActivity.class);
+                startActivity(intent);
             }
         });
+    }
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 
     private void getList(){
@@ -65,7 +72,7 @@ public class LoanActivity extends AppCompatActivity {
                     BorrowerLoanModal responseFromAPI = response.body();
                     List<BorrowerLoanModal> b = responseFromAPI.getLoan();
 
-                    Toast.makeText(LoanActivity.this, "response added to API"+response.body(), Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(LoanActivity.this, "response added to API"+response.body(), Toast.LENGTH_SHORT).show();
                     ArrayAdapter adapter = new LoanAdapter(LoanActivity.this, b);
                     listView.setAdapter(adapter);
                 }

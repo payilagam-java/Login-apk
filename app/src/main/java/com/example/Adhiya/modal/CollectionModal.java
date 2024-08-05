@@ -25,6 +25,10 @@ public class CollectionModal implements Serializable {
     @Expose
     private int id;
 
+    @SerializedName("borrowerLoanId")
+    @Expose
+    private int borrowerLoanId;
+
     @SerializedName("borrowerId")
     @Expose
     private String borrowerId;
@@ -79,6 +83,14 @@ public class CollectionModal implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBorrowerLoanId() {
+        return borrowerLoanId;
+    }
+
+    public void setBorrowerLoanId(int borrowerLoanId) {
+        this.borrowerLoanId = borrowerLoanId;
     }
 
     public String getBorrowerId() {

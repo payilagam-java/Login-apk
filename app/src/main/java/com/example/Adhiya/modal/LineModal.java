@@ -20,9 +20,8 @@ public class LineModal {
 		this.result = result;
 	}
 
-
 	@SerializedName("id")
-    @Expose
+	@Expose
 	private String id;
 	
 	@SerializedName("lineId")
@@ -84,6 +83,18 @@ public class LineModal {
 	@SerializedName("organizationName")
     @Expose
 	private String organizationName;
+
+	@SerializedName("cashOnHand")
+	@Expose
+	private String cashOnHand;
+
+	public String getCashOnHand() {
+		return cashOnHand;
+	}
+
+	public void setCashOnHand(String cashOnHand) {
+		this.cashOnHand = cashOnHand;
+	}
 
 	public String getId() {
 		return id;
