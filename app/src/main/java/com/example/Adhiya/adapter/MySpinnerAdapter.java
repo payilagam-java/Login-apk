@@ -5,14 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.SpinnerModal;
 import com.example.splash.R;
 
 import java.util.ArrayList;
 
-public class MySpinnerAdapter extends ArrayAdapter {
+public class MySpinnerAdapter extends ArrayAdapter implements Filterable {
 
     private Context context;
     private ArrayList<SpinnerModal> myObjs;
@@ -59,6 +62,39 @@ public class MySpinnerAdapter extends ArrayAdapter {
         TextView textViewName = convertView.findViewById(R.id.text1);
         textViewName.setText(myObjs.get(position).getText());
         return convertView;
+    }
+
+    private ArrayList<SpinnerModal> orig;
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<SpinnerModal> results = new ArrayList<SpinnerModal>();
+                if (orig == null)
+                    orig = myObjs;
+                if (constraint != null) {
+                    if (orig != null && orig.size() > 0) {
+                        for (final SpinnerModal g : orig) {
+                            if (g.getText().toLowerCase()
+                                    .contains(constraint.toString())) {
+                                results.add(g);
+                            }
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                myObjs = (ArrayList<SpinnerModal>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
 

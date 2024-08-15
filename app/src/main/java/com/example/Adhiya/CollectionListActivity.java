@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.CollectionAdapter;
 import com.example.Adhiya.adapter.LoanAdapter;
@@ -40,6 +41,16 @@ public class CollectionListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
+
         listView = findViewById(R.id.ListView);
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("BUNDLE");

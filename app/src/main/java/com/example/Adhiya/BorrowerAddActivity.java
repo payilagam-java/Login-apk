@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.MySpinnerAdapter;
 import com.example.Adhiya.modal.BorrowerModal;
@@ -56,7 +62,31 @@ public class BorrowerAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_borrower);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Add Borrower");
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+//        toolbar.inflateMenu(R.menu.borrower_menu);
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                if (item.getItemId() == R.id.delete) {
+//                    // do something
+//                }
+//                return false;
+//            }
+//        });
 
+
+
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
         //Get the object from input fields
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLasttName = findViewById(R.id.editTextLasttName);
@@ -94,7 +124,7 @@ public class BorrowerAddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ArrayList ReferModal= new ArrayList<SpinnerModal>();
                 for(BorrowerModal bm :b){
-                    ReferModal.add(new SpinnerModal(bm.getFirstName()+" "+bm.getLastName()+"\n"+bm.getBorrowerId(),String.valueOf(bm.getId())));
+                    ReferModal.add(new SpinnerModal(bm.getBorrowerId()+" - "+bm.getFirstName(),String.valueOf(bm.getId())));
                 }
                 Dialog dialog = ProgressUtil.spinnerProgress(BorrowerAddActivity.this);
                 ListView listView=dialog.findViewById(R.id.list_view);
@@ -108,11 +138,29 @@ public class BorrowerAddActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+                EditText search = dialog.findViewById(R.id.edit_text);
+                search.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        adapter.getFilter().filter(s);
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
             }
         });
 
 
-        getLineList("1");
+        getLineList("0");
         spinnerLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +205,9 @@ public class BorrowerAddActivity extends AppCompatActivity {
             postData(borrowerModal);
         });
     }
+
+
+
     OnItemSelectedListener onItemSelectedListener0 =
             new OnItemSelectedListener(){
                 @Override

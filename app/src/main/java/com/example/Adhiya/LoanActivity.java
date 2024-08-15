@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.LoanAdapter;
 import com.example.Adhiya.modal.BorrowerLoanModal;
@@ -39,6 +40,18 @@ public class LoanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Borrower Loan");
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
+
+
         getList();
         listView = findViewById(R.id.ListView);
         addButton = findViewById(R.id.addButton);
@@ -80,6 +93,7 @@ public class LoanActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BorrowerLoanModal> call, Throwable t) {
+
                 Toast.makeText(LoanActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

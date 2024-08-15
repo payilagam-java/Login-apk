@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.Adhiya.BorrowerActivity;
 import com.example.Adhiya.modal.UserModal;
+import com.example.Adhiya.util.DataProccessor;
 import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 import com.example.Adhiya.network.ApiClient;
@@ -41,77 +42,58 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-      // postData("Ad111","arivu");
+       // postData("Ad111","arivu");
         // Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
-
         // Set click listener for login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // Get entered username and password
                 String enteredUsername = usernameEditText.getText().toString().trim();
                 String enteredPassword = passwordEditText.getText().toString().trim();
-
                 // Validate username and password
                 if (TextUtils.isEmpty(enteredUsername)) {
                     usernameEditText.setError("Please enter your username");
                     return;
                 }
-
                 if (TextUtils.isEmpty(enteredPassword)) {
                     passwordEditText.setError("Please enter your password");
                     return;
                 }
-
-           postData(enteredUsername,enteredPassword);
-
+                postData(enteredUsername, enteredPassword);
             }
         });
     }
+
     private void postData(String name, String pass) {
         retrofitAPI = ApiClient.getApiLogin();
-        UserModal modal = new UserModal(name, pass,"zdeftryuioplmnbhg");
+        UserModal modal = new UserModal(name, pass, "zdeftryuioplmnbhg");
         Call<String> call = retrofitAPI.login(modal);
         Dialog dialog = ProgressUtil.showProgress(MainActivity.this);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 dialog.dismiss();
-               if(response.code() == 200) {                // this method is called when we get response from our api.
-                   String responseFromAPI = response.body();
-                   SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-                   SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
-                   // write all the data entered by the user in SharedPreference and apply
-                   myEdit.putString("token", responseFromAPI);;
-                   myEdit.apply();
-                   //Toast.makeText(MainActivity.this, "Data added to API" + response.body(), Toast.LENGTH_SHORT).show();
-                   Intent borrowerIntent = new Intent(MainActivity.this, DashboardActivity.class);
-                   startActivity(borrowerIntent);
-                   // Finish MainActivity
-                   finish();
-               }else{
-                   JSONObject jobj = new JSONObject();
-                   try {
-                       jobj = new JSONObject(response.errorBody().toString());
-                       Toast.makeText(MainActivity.this, "Data added to API " + jobj.get("title"), Toast.LENGTH_SHORT).show();
-                   } catch (Exception e) {
-                       Toast.makeText(MainActivity.this, "Something went wrong!! ", Toast.LENGTH_SHORT).show();
-                   }
+                if (response.code() == 200) {                // this method is called when we get response from our api.
+                    String responseFromAPI = response.body();
+                    new DataProccessor(MainActivity.this).SetString(responseFromAPI);
+                    Intent borrowerIntent = new Intent(MainActivity.this, DashboardActivity.class);
+                    startActivity(borrowerIntent);
+                    finish();
+                } else if (response.code() == 401) {
+                    Toast.makeText(MainActivity.this, "Invalid Username and password", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Something went wrong!!" + response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                // setting text to our text view when
-                // we get error response from API.
-                //responseTV.setText("Error found is : " + t.getMessage());
-                Toast.makeText(MainActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(MainActivity.this, "Something went wrong!!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }

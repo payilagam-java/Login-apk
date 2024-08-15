@@ -29,7 +29,6 @@ public class ApiClient {
     public static RetrofitAPI getApiClient(String token){
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-// set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = null;
         if(token !="") {

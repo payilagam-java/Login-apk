@@ -82,7 +82,17 @@ public class BorrowerModal implements Serializable,ParentModal{
     @Expose
     private String lineId;
 
+    @SerializedName("lineName")
+    @Expose
+    private String lineName;
 
+    public String getLineName() {
+        return lineName;
+    }
+
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
 
     public int getId() {
         return id;

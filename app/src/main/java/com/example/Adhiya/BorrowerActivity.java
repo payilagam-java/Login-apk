@@ -4,14 +4,17 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.BorrowerAdapter;
 import com.example.Adhiya.modal.BorrowerModal;
@@ -30,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BorrowerActivity extends AppCompatActivity {
+public class BorrowerActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private ListView listView;
     private FloatingActionButton addContactButton;
@@ -40,10 +43,21 @@ public class BorrowerActivity extends AppCompatActivity {
     private RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
     List<BorrowerModal> b;
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_borrower);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
+
         getBorrowerList();
         // dbHelper = new ContactDatabaseHelper(this);
 
@@ -70,7 +84,34 @@ public class BorrowerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        searchView=findViewById(R.id.searchView);
+        listView.setTextFilterEnabled(true);
+        setupSearchView();
+    }
 
+    private void setupSearchView()
+    {
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(BorrowerActivity.this);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryHint("Search Here");
+    }
+    @Override
+    public boolean onQueryTextChange(String newText)
+    {
+
+        if (TextUtils.isEmpty(newText)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(newText);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query)
+    {
+        return false;
     }
     @Override
     public void onRestart()
@@ -103,6 +144,7 @@ public class BorrowerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<BorrowerModal> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(BorrowerActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

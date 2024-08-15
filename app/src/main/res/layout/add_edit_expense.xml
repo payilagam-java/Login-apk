@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:title="Borrower"
+            app:title="Add Expense"
             app:titleTextColor="@android:color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -84,7 +84,7 @@
                  android:layout_height="wrap_content"
                  android:inputType="date"
                  android:hint="Select date"
-                 android:layout_marginTop="15dp"/>
+                 android:layout_marginTop="30dp"/>
          </RelativeLayout>
 
          <RelativeLayout
@@ -100,7 +100,7 @@
                  android:id="@+id/expenseamount"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:inputType="text"
+                 android:inputType="number"
                  android:layout_marginTop="15dp"/>
          </RelativeLayout>
 
@@ -110,7 +110,7 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:orientation="horizontal"
-             android:layout_marginTop="25dp">
+             android:layout_marginTop="35dp">
              <Button
                  android:id="@+id/buttonSave"
                  style="?android:attr/absListViewStyle"

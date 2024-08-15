@@ -28,6 +28,8 @@ public interface RetrofitAPI {
     @POST("/api/Borrower/InsertUpdateBorrower")
     Call<ResponseModal> addEditBorrower(@Body BorrowerModal borrowerModal);
 
+    @POST("/api/Borrower/DeleteBorrower")
+    Call<ResponseModal> deleteBorrower(@Body String body);
 
     @POST("api/Organization/GetOrganization")
     @Headers({"Content-Type: application/json"})

@@ -16,7 +16,11 @@
         <item>Active</item>
         <item>Default</item>
         <item>Closed</item>
+    </string-array>
 
+    <string-array name="bstatus">
+        <item>Active</item>
+        <item>InActive</item>
     </string-array>
 
 </resources>

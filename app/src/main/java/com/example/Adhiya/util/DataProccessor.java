@@ -49,6 +49,12 @@ public class DataProccessor {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         return prefs.getString(key,"");
     }
+    public static void SetString(String token) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.putString("token", token);;
+        myEdit.apply();
+    }
     public static String getToken(){
         return getString("token");
     }

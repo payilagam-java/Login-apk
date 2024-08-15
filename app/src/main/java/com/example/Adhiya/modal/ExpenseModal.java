@@ -19,11 +19,11 @@ public class ExpenseModal {
         this.result = result;
     }
 
-    @SerializedName("LineId")
+    @SerializedName("lineId")
     @Expose
     private String LineId;
 
-    @SerializedName("LineName")
+    @SerializedName("lineName")
     @Expose
     private String LineName;
 

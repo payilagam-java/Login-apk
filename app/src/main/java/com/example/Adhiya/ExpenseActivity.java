@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.BorrowerAdapter;
 import com.example.Adhiya.adapter.ExpenseAdapter;
@@ -45,6 +46,17 @@ public class ExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
+
+
         listView = findViewById(R.id.contactsListView);
         getExpenseList();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -97,6 +109,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ExpenseModal> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(ExpenseActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

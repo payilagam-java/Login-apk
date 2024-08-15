@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -67,6 +68,19 @@ public class CollectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_collection);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
+
+
+
+
         spinnerOrg= findViewById(R.id.spinnerOrgnization);
         spinnerOrg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +211,7 @@ public class CollectionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<OraganizationModal> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(CollectionActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -246,6 +261,7 @@ public class CollectionActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LineModal> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(CollectionActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

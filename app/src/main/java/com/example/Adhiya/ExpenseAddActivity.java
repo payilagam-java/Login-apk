@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.MySpinnerAdapter;
 import com.example.Adhiya.modal.BorrowerLoanModal;
@@ -51,10 +53,25 @@ public class ExpenseAddActivity extends AppCompatActivity {
     List<BorrowerModal> b;
     List<LineModal> lineList;
     ExpenseModal em = new ExpenseModal();
+    private String expLine ;
+    private String expReason ;
+    private String expDate ;
+    private String expAmount ;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_expense);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                finish();
+            }
+        });
 
         //Get the object from input fields
         line = findViewById(R.id.expenseline);
@@ -78,26 +95,30 @@ public class ExpenseAddActivity extends AppCompatActivity {
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our text view.
                                 expensedate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                em.setDateOfExpense(year+"-"+String.format("%02d", (monthOfYear + 1))+"-"+String.format("%02d", dayOfMonth));
+                                em.setDateOfExpense(year + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", dayOfMonth));
                             }
                         },
                         year, month, day);
+
+                //Prevent Future date
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
+
         });
 
 
-        getLineList("1");
+        getLineList("0");
         line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList ReferModal= new ArrayList<SpinnerModal>();
-                for(LineModal bm :lineList){
-                    ReferModal.add(new SpinnerModal(bm.getLineName(),bm.getId()));
+                ArrayList ReferModal = new ArrayList<SpinnerModal>();
+                for (LineModal bm : lineList) {
+                    ReferModal.add(new SpinnerModal(bm.getLineName(), bm.getId()));
                 }
                 Dialog dialog = ProgressUtil.spinnerProgress(ExpenseAddActivity.this);
-                ListView listView=dialog.findViewById(R.id.list_view);
-                MySpinnerAdapter adapter=new MySpinnerAdapter(ExpenseAddActivity.this, R.layout.custom_spinner_item,ReferModal);
+                ListView listView = dialog.findViewById(R.id.list_view);
+                MySpinnerAdapter adapter = new MySpinnerAdapter(ExpenseAddActivity.this, R.layout.custom_spinner_item, ReferModal);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -114,13 +135,50 @@ public class ExpenseAddActivity extends AppCompatActivity {
 
         Button buttonSave = findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(v -> {
-            em.setExpenseReason(reason.getText().toString().trim());
-            em.setAmount(expenseamount.getText().toString().trim());
-            postData(em);
+
+            if (CheckAllFields()) {
+                em.setExpenseReason(reason.getText().toString().trim());
+                em.setAmount(expenseamount.getText().toString().trim());
+                postData(em);
+            }
         });
     }
 
-
+    private boolean CheckAllFields() {
+        expLine = line.getText().toString().trim();
+        expReason = reason.getText().toString().trim();
+        expDate = expensedate.getText().toString().trim();
+        expAmount = expenseamount.getText().toString().trim();
+        line.setError(null);
+        reason.clearFocus();
+        expensedate.setError(null);
+        expenseamount.clearFocus();
+        if (expLine.length() == 0) {
+            line.setError("Line is required");
+            return false;
+        }
+        if (expReason.length() == 0) {
+            reason.setError("Reason is required");
+            return false;
+        }
+        if (expReason.length() > 20) {
+            reason.setError("Reason must be less than 20 characters");
+            return false;
+        }
+        if (expDate.length() == 0) {
+            expensedate.setError("Date of expense is required");
+            return false;
+        }
+        if (expAmount.length()== 0|| expAmount == null) {
+            expenseamount.setError("Expense Amount should not be empty");
+            return false;
+        }
+        if (Integer.parseInt(expAmount) > 1000) {
+            expenseamount.setError("Expense Amount should be below 1000");
+            return false;
+        }
+        return true;
+    }
 
     private void postData(ExpenseModal expenseModal) {
         retrofitAPI = ApiClient.getApiClient(new DataProccessor(this).getToken());
@@ -128,54 +186,43 @@ public class ExpenseAddActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseModal>() {
             @Override
             public void onResponse(Call<ResponseModal> call, Response<ResponseModal> response) {
-                if(response.code() == 200) {                // this method is called when we get response from our api.
+                if (response.code() == 200) {                // this method is called when we get response from our api.
                     ResponseModal responseFromAPI = response.body();
                     Toast.makeText(ExpenseAddActivity.this, responseFromAPI.getMessage(), Toast.LENGTH_SHORT).show();
                     finish();
-                }else{
+                } else if (response.code() == 401){
+                    Intent borrowerIntent = new Intent(ExpenseAddActivity.this, MainActivity.class);
+                    startActivity(borrowerIntent);
+                    finish();
+                }else {
                     Toast.makeText(ExpenseAddActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseModal> call, Throwable t) {
-                Toast.makeText(ExpenseAddActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ExpenseAddActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
-//        private void getBorrowerList(String body){
-//            retrofitAPI = ApiClient.getApiClient(new DataProccessor(this).getToken());
-//            Call<BorrowerModal> call = retrofitAPI.getBorrower(body);
-//            call.enqueue(new Callback<BorrowerModal>() {
-//                @Override
-//                public void onResponse(Call<BorrowerModal> call, Response<BorrowerModal> response) {
-//                    if(response.code() == 200) {                // this method is called when we get response from our api.
-//                        BorrowerModal responseFromAPI = response.body();
-//                        b = responseFromAPI.getResult();
-//                    }
-//                }
-//                @Override
-//                public void onFailure(Call<BorrowerModal> call, Throwable t) {
-//                    Toast.makeText(ExpenseAddActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
 
-    private void getLineList(String body){
+    private void getLineList(String body) {
         retrofitAPI = ApiClient.getApiClient(new DataProccessor(this).getToken());
         Call<LineModal> call = retrofitAPI.getLine(body);
         call.enqueue(new Callback<LineModal>() {
             @Override
             public void onResponse(Call<LineModal> call, Response<LineModal> response) {
-                if(response.code() == 200) {                // this method is called when we get response from our api.
+                if (response.code() == 200) {                // this method is called when we get response from our api.
                     LineModal responseFromAPI = response.body();
                     lineList = responseFromAPI.getResult();
                 }
             }
+
             @Override
             public void onFailure(Call<LineModal> call, Throwable t) {
-                Toast.makeText(ExpenseAddActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ExpenseAddActivity.this, "failed added to API" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
