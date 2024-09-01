@@ -23,4 +23,11 @@
         <item>InActive</item>
     </string-array>
 
+
+    <string-array name="fruit_name">
+        <item>Active</item>
+        <item>Closed</item>
+        <item>Default</item>
+    </string-array>
+
 </resources>

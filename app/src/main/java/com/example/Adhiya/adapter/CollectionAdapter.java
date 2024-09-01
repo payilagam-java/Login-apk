@@ -1,36 +1,124 @@
 package com.example.Adhiya.adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.Adhiya.CollectionListActivity;
+import com.example.Adhiya.ExpenseAddActivity;
+import com.example.Adhiya.LoanAddActivity;
+import com.example.Adhiya.PaymentActivity;
 import com.example.Adhiya.modal.BorrowerLoanModal;
+import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.CollectionModal;
+import com.example.Adhiya.modal.ResponseModal;
+import com.example.Adhiya.modal.SendCollection;
+import com.example.Adhiya.network.ApiClient;
+import com.example.Adhiya.repo.RetrofitAPI;
+import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 
+import java.io.Serializable;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CollectionAdapter extends ArrayAdapter<CollectionModal> {
-    public CollectionAdapter(Context context, List<CollectionModal> users) {
+    Context context;
+    SendCollection date;
+
+    public CollectionAdapter(Context context, List<CollectionModal> users, SendCollection date) {
         super(context, 0, users);
+        this.context = context;
+        this.date = date;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CollectionModal user = getItem(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.collection_item_list, parent, false);
         }
 
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-        TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
-        tvName.setText(user.getBorrowerName());
-        tvHome.setText(user.getPayableAmount());
+        TextView field1 = (TextView) convertView.findViewById(R.id.field1);
+        TextView field2 = (TextView) convertView.findViewById(R.id.field2);
+        TextView field3 = (TextView) convertView.findViewById(R.id.field3);
+        TextView field4 = (TextView) convertView.findViewById(R.id.field4);
+        TextView field5 = (TextView) convertView.findViewById(R.id.field5);
+
+        field1.setText(user.getBorrowerName());
+        field2.setText("Loan ID: "+String.valueOf(user.getBorrowerLoanId()));
+        field3.setText("Loan Amount: "+String.valueOf(user.getPayableAmount()));
+        Float bal = Float.parseFloat(user.getPayableAmount()) - Float.parseFloat(user.getBalance());
+        field4.setText("Balance: "+String.valueOf(bal));
+
+        field5.setText("Amount Paid: "+String.valueOf(user.getAmountofPaid()));
+
+        ImageButton pay= (ImageButton) convertView.findViewById(R.id.pay);
+        ImageButton history = (ImageButton) convertView.findViewById(R.id.history);
+        ImageButton call = (ImageButton) convertView.findViewById(R.id.call);
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PaymentActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("payloan",(Serializable)user);
+                args.putSerializable("date",(Serializable) date);
+                intent.putExtra("BUNDLE",args);
+                //intent.putExtra("date",date);
+                context.startActivity(intent);
+            }
+        });
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBorrowerList(user.getBorrowerId());
+
+            }
+        });
+
+
+
         return convertView;
 
+    }
+
+    private void getBorrowerList(String body){
+        RetrofitAPI retrofitAPI  = new ApiClient(context).getApiClient();
+        Call call = retrofitAPI.getBorrower(body);
+        call.enqueue(new Callback<ResponseModal>() {
+            @Override
+            public void onResponse(Call<ResponseModal> call, Response<ResponseModal> response) {
+                if(response.code() == 200) {                // this method is called when we get response from our api.
+                    ResponseModal responseFromAPI = response.body();
+                    List<BorrowerModal> b = responseFromAPI.getObject();
+                    BorrowerModal bm = b.get(0);
+                    Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                    callIntent.setData(Uri.parse("tel:" +bm.getMobileNubmer()));
+
+                    context.startActivity(callIntent);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseModal> call, Throwable t) {
+                Toast.makeText(context, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

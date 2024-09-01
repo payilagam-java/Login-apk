@@ -1,18 +1,17 @@
 package com.example.Adhiya;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.Adhiya.util.DataProccessor;
+import com.example.Adhiya.network.ApiClient;
+import com.example.Adhiya.util.CommonUtil;
+import com.example.Adhiya.util.Datautil;
 import com.example.splash.R;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -26,7 +25,7 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        CommonUtil.getTitleBar(this,"Dashboard");
         cardView1 = findViewById(R.id.borrower);
         cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,15 +60,25 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        cardView5 = findViewById(R.id.logout);
-        cardView5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DataProccessor(DashboardActivity.this).SetString("");
-                Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        cardView5 = findViewById(R.id.logout);
+//        cardView5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this); // Change "this" to `getActivity()` if you're using this on a fragment
+//                builder.setMessage(Datautil.LOGOUT_MSG)
+//                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int i) {
+//                                new ApiClient(DashboardActivity.this).SetString("");
+//                                Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                            }
+//                        })
+//                        .setNegativeButton("No", null)
+//                        .show();
+//
+//            }
+//        });
     }
 }

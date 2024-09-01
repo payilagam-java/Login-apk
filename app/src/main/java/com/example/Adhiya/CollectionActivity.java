@@ -36,6 +36,7 @@ import com.example.Adhiya.modal.SpinnerModal;
 import com.example.Adhiya.modal.UserModal;
 import com.example.Adhiya.network.ApiClient;
 import com.example.Adhiya.repo.RetrofitAPI;
+import com.example.Adhiya.util.CommonUtil;
 import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 
@@ -62,21 +63,22 @@ public class CollectionActivity extends AppCompatActivity {
     private Button borrowerButton;
 
     private SendCollection sendCollection = new SendCollection();
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_collection);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // back button pressed
-                finish();
-            }
-        });
+        CommonUtil.getTitleBar(this,"collection");
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // back button pressed
+//                finish();
+//            }
+//        });
 
 
 
@@ -117,12 +119,14 @@ public class CollectionActivity extends AppCompatActivity {
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our text view.
                                 collDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                sendCollection.setCollectiondate(year+"-"+(monthOfYear + 1) +"-"+dayOfMonth);
+                                //sendCollection.setCollectiondate(year+"-"+(monthOfYear + 1) +"-"+dayOfMonth);
+                                sendCollection.setCollectiondate(year + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", dayOfMonth));
                             }
                         },
 
                         year, month, day);
-
+//Prevent Future date
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 datePickerDialog.show();
             }
         });
@@ -131,8 +135,14 @@ public class CollectionActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postData();
+               // postData();
+                Intent intent = new Intent(CollectionActivity.this, CollectionListActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("collection",(Serializable)sendCollection);
 
+                intent.putExtra("BUNDLE",args);
+                intent.putExtra("date",sendCollection.getCollectiondate());
+                startActivity(intent);
             }
         });
 
@@ -140,9 +150,7 @@ public class CollectionActivity extends AppCompatActivity {
     }
 
     private void postData( ){
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String token = sh.getString("token", "");
-        retrofitAPI = ApiClient.getApiClient(token);
+        retrofitAPI = ApiClient.getApiClient();
         Dialog dialog = ProgressUtil.showProgress(CollectionActivity.this);
 
         Call<CollectionModal> call = retrofitAPI.getCollect(sendCollection);
@@ -155,8 +163,10 @@ public class CollectionActivity extends AppCompatActivity {
                    ArrayList<CollectionModal> b = responseFromAPI.getResult();
                     Intent intent = new Intent(CollectionActivity.this, CollectionListActivity.class);
                     Bundle args = new Bundle();
-                    args.putSerializable("collection",(Serializable)b);
-                    intent.putExtra("BUNDLE",args);
+                    args.putSerializable("collection", (Serializable) b);
+
+                    intent.putExtra("BUNDLE", args);
+//                    intent.putExtra("date",sendCollecxtion.getCollectiondate());
                     startActivity(intent);
                 }
             }
@@ -170,9 +180,7 @@ public class CollectionActivity extends AppCompatActivity {
 
     private void getColectionList(){
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String token = sh.getString("token", "");
-        retrofitAPI = ApiClient.getApiClient(token);
+        retrofitAPI = ApiClient.getApiClient();
         Dialog dialog1 = ProgressUtil.showProgress(CollectionActivity.this);
         Call<OraganizationModal> call = retrofitAPI.getCollection("0");
         call.enqueue(new Callback<OraganizationModal>() {
@@ -183,11 +191,12 @@ public class CollectionActivity extends AppCompatActivity {
                     OraganizationModal responseFromAPI = response.body();
                     List<OraganizationModal> b = responseFromAPI.getResult();
                     // this method is called when we get response from our api.
-                    dialog=new Dialog(CollectionActivity.this);
-                    dialog.setContentView(R.layout.dialog_searchable_spinner);
-                    dialog.getWindow().setLayout(650,800);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
+                    Dialog dialog = ProgressUtil.spinnerProgress(CollectionActivity.this);
+//                    dialog=new Dialog(CollectionActivity.this);
+//                    dialog.setContentView(R.layout.dialog_searchable_spinner);
+//                    dialog.getWindow().setLayout(650,800);
+//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    dialog.show();
                     ListView listView=dialog.findViewById(R.id.list_view);
 
                     ArrayList orgData= new ArrayList<SpinnerModal>();
@@ -220,9 +229,8 @@ public class CollectionActivity extends AppCompatActivity {
 
     private void getLineList(){
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String token = sh.getString("token", "");
-        retrofitAPI = ApiClient.getApiClient(token);
+
+        retrofitAPI = ApiClient.getApiClient();
         Dialog dialog1 = ProgressUtil.showProgress(CollectionActivity.this);
         Call<LineModal> call = retrofitAPI.getLine("0");
         call.enqueue(new Callback<LineModal>() {
@@ -233,16 +241,19 @@ public class CollectionActivity extends AppCompatActivity {
                     LineModal responseFromAPI = response.body();
                     List<LineModal> b = responseFromAPI.getResult();
                     // this method is called when we get response from our api.
-                    dialog=new Dialog(CollectionActivity.this);
-                    dialog.setContentView(R.layout.dialog_searchable_spinner);
-                    dialog.getWindow().setLayout(650,800);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
-                    ListView listView=dialog.findViewById(R.id.list_view);
+                     dialog = ProgressUtil.spinnerProgress(CollectionActivity.this);
+//                    dialog=new Dialog(CollectionActivity.this);
+//                    dialog.setContentView(R.layout.dialog_searchable_spinner);
+//                    dialog.getWindow().setLayout(650,800);
+//                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                    dialog.show();
+                   ListView listView=dialog.findViewById(R.id.list_view);
 
                     ArrayList orgData= new ArrayList<SpinnerModal>();
                     for(LineModal org :b){
-                        orgData.add(new SpinnerModal(org.getLineName(),org.getId()));
+                        if(sendCollection.getOrganizationId().equals(String.valueOf(org.getOrganizationId()))) {
+                            orgData.add(new SpinnerModal(org.getLineName(), org.getId()));
+                        }
                     }
                     MySpinnerAdapter adapter=new MySpinnerAdapter(CollectionActivity.this, R.layout.custom_spinner_item,orgData);
                     listView.setAdapter(adapter);

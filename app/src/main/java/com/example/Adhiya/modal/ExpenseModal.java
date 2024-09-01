@@ -3,9 +3,10 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ExpenseModal {
+public class ExpenseModal implements Serializable {
 
     @SerializedName("object")
     @Expose
@@ -18,6 +19,10 @@ public class ExpenseModal {
     public void setResult(ArrayList<ExpenseModal> result) {
         this.result = result;
     }
+
+    @SerializedName("id")
+    @Expose
+    private String id;
 
     @SerializedName("lineId")
     @Expose
@@ -39,6 +44,14 @@ public class ExpenseModal {
     @SerializedName("amount")
     @Expose
     private String Amount;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getLineId() {
         return LineId;

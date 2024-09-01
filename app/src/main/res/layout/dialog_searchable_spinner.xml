@@ -4,7 +4,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@android:color/white"
@@ -18,7 +18,13 @@
         android:textSize="20sp"
         android:textStyle="bold"
         />
-
+    <ImageView android:id="@+id/image"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:layout_gravity="right"
+    android:src="@drawable/baseline_close_24" />
     <!-- Edit text to allow user to type name
         of item he/she wants to search-->
     <EditText

@@ -3,7 +3,15 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseModal {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ResponseModal<T> {
+
+    @SerializedName("object")
+    @Expose
+    private List<T> object;
+
     @SerializedName("status")
     @Expose
     private int status;
@@ -24,6 +32,15 @@ public class ResponseModal {
     @SerializedName("canDelete")
     @Expose
     private String canDelete;
+
+
+    public List<T> getObject() {
+        return object;
+    }
+
+    public void setObject(List<T> object) {
+        this.object = object;
+    }
 
     public int getStatus() {
         return status;

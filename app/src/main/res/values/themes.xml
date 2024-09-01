@@ -7,4 +7,10 @@
     </style>
 
     <style name="Theme.Splash" parent="Base.Theme.Splash" />
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#148E13</item>
+    </style>
+
+
 </resources>

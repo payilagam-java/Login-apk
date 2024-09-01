@@ -1,9 +1,7 @@
 package com.example.Adhiya;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,15 +11,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.Adhiya.BorrowerActivity;
 import com.example.Adhiya.modal.UserModal;
-import com.example.Adhiya.util.DataProccessor;
+import com.example.Adhiya.util.Datautil;
 import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 import com.example.Adhiya.network.ApiClient;
 import com.example.Adhiya.repo.RetrofitAPI;
-
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -35,15 +30,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private RetrofitAPI retrofitAPI;
-    // Dummy user credentials map (replace with your actual user authentication logic)
+
     private Map<String, String> userCredentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-       // postData("Ad111","arivu");
-        // Initialize views
+        postData("Ad111","arivu");
+        // 0Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginButton);
@@ -63,14 +58,14 @@ public class MainActivity extends AppCompatActivity {
                     passwordEditText.setError("Please enter your password");
                     return;
                 }
-                postData(enteredUsername, enteredPassword);
+               //postData(enteredUsername, enteredPassword);
             }
         });
     }
 
     private void postData(String name, String pass) {
         retrofitAPI = ApiClient.getApiLogin();
-        UserModal modal = new UserModal(name, pass, "zdeftryuioplmnbhg");
+        UserModal modal = new UserModal(name, pass, Datautil.APK_KEY);
         Call<String> call = retrofitAPI.login(modal);
         Dialog dialog = ProgressUtil.showProgress(MainActivity.this);
         call.enqueue(new Callback<String>() {
@@ -79,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 if (response.code() == 200) {                // this method is called when we get response from our api.
                     String responseFromAPI = response.body();
-                    new DataProccessor(MainActivity.this).SetString(responseFromAPI);
+                    new ApiClient(MainActivity.this).SetString(responseFromAPI);
                     Intent borrowerIntent = new Intent(MainActivity.this, DashboardActivity.class);
                     startActivity(borrowerIntent);
                     finish();

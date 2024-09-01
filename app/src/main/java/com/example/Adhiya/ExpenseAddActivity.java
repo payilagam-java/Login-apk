@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.Adhiya.adapter.MySpinnerAdapter;
-import com.example.Adhiya.modal.BorrowerLoanModal;
 import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.ExpenseModal;
 import com.example.Adhiya.modal.LineModal;
@@ -26,7 +24,7 @@ import com.example.Adhiya.modal.ResponseModal;
 import com.example.Adhiya.modal.SpinnerModal;
 import com.example.Adhiya.network.ApiClient;
 import com.example.Adhiya.repo.RetrofitAPI;
-import com.example.Adhiya.util.DataProccessor;
+import com.example.Adhiya.util.CommonUtil;
 import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 
@@ -58,6 +56,7 @@ public class ExpenseAddActivity extends AppCompatActivity {
     private String expDate ;
     private String expAmount ;
 
+    ExpenseModal editExp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +130,19 @@ public class ExpenseAddActivity extends AppCompatActivity {
                 });
             }
         });
-
+        String title = "Add Expense";
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("EDIT");
+        if (args != null) {
+            title = "Edit Expense";
+            editExp= (ExpenseModal) args.getSerializable("expense");
+            line.setText(editExp.getLineName());
+            reason.setText(editExp.getExpenseReason());
+            expensedate.setText(editExp.getDateOfExpense().toString().split("T")[0]);
+            expenseamount.setText(editExp.getAmount());
+            em = editExp;
+        }
+        CommonUtil.getTitleBar(this,title);
 
         Button buttonSave = findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(v -> {
@@ -173,7 +184,7 @@ public class ExpenseAddActivity extends AppCompatActivity {
             expenseamount.setError("Expense Amount should not be empty");
             return false;
         }
-        if (Integer.parseInt(expAmount) > 1000) {
+        if (Float.parseFloat(expAmount) > 1000) {
             expenseamount.setError("Expense Amount should be below 1000");
             return false;
         }
@@ -181,7 +192,7 @@ public class ExpenseAddActivity extends AppCompatActivity {
     }
 
     private void postData(ExpenseModal expenseModal) {
-        retrofitAPI = ApiClient.getApiClient(new DataProccessor(this).getToken());
+        retrofitAPI = ApiClient.getApiClient();
         Call<ResponseModal> call = retrofitAPI.addEditExpense(expenseModal);
         call.enqueue(new Callback<ResponseModal>() {
             @Override
@@ -209,7 +220,7 @@ public class ExpenseAddActivity extends AppCompatActivity {
 
 
     private void getLineList(String body) {
-        retrofitAPI = ApiClient.getApiClient(new DataProccessor(this).getToken());
+        retrofitAPI = ApiClient.getApiClient();
         Call<LineModal> call = retrofitAPI.getLine(body);
         call.enqueue(new Callback<LineModal>() {
             @Override

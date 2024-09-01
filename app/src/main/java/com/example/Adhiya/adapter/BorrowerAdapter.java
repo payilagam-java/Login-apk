@@ -1,42 +1,32 @@
 package com.example.Adhiya.adapter;
 
 
-import static android.content.Context.MODE_PRIVATE;
-
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.Adhiya.BorrowerActivity;
 import com.example.Adhiya.BorrowerAddActivity;
 import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.ResponseModal;
 import com.example.Adhiya.network.ApiClient;
 import com.example.Adhiya.repo.RetrofitAPI;
-import com.example.Adhiya.util.DataProccessor;
 import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -180,7 +170,7 @@ public class BorrowerAdapter extends ArrayAdapter<BorrowerModal> implements Filt
 
     private void getBorrowerList(String body,boolean switchChecked){
 
-       RetrofitAPI retrofitAPI = ApiClient.getApiClient(new DataProccessor(context).getToken());
+       RetrofitAPI retrofitAPI = ApiClient.getApiClient();
         Dialog dialog = ProgressUtil.showProgress((Activity) context);
 
         Call<ResponseModal> call = retrofitAPI.deleteBorrower(body);

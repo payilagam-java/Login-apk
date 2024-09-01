@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="10dp" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <include layout="@layout/header" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="false"
+        android:orientation="vertical"
+        android:padding="10dp">
+
 
     <TextView
         android:layout_marginTop="10dp"
@@ -62,6 +71,19 @@
         android:text="Loan Amount"
         android:layout_marginBottom="10dp"/>
 
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date of Pay"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/dateofpay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Loan Amount"
+            android:layout_marginBottom="10dp"/>
+
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
@@ -70,6 +92,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <EditText
         android:id="@+id/editPayAmount"
+        android:inputType="number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </EditText>
@@ -98,4 +121,5 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Pay" />
+    </LinearLayout>
 </LinearLayout>

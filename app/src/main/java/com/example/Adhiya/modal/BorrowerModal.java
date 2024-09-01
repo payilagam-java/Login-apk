@@ -7,20 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BorrowerModal implements Serializable,ParentModal{
-
-
-        @SerializedName("object")
-        @Expose
-        private ArrayList<BorrowerModal> result;
-
-
-        public ArrayList<BorrowerModal> getResult() {
-            return result;
-        }
-        public void setResult(ArrayList<BorrowerModal> result) {
-            this.result = result;
-        }
+public class BorrowerModal  implements Serializable{
 
     @SerializedName("id")
     @Expose

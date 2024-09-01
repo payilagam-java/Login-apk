@@ -26,9 +26,9 @@ public class BorrowerLoanModal  {
     @Expose
 	private String borrowerId;
 	
-	@SerializedName("BId")
+	@SerializedName("bId")
     @Expose
-	private String BId;
+	private int BId;
 	
 	@SerializedName("borrowerName")
     @Expose
@@ -146,11 +146,11 @@ public class BorrowerLoanModal  {
 		this.borrowerId = borrowerId;
 	}
 
-	public String getBId() {
+	public int getBId() {
 		return BId;
 	}
 
-	public void setBId(String BId) {
+	public void setBId(int bId) {
 		this.BId = BId;
 	}
 

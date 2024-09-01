@@ -42,6 +42,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
     List<ExpenseModal> b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +60,8 @@ public class ExpenseActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.contactsListView);
         getExpenseList();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id)
-            {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 //                ExpenseModal cm = b.get(position);
 //                Intent intent = new Intent(ExpenseActivity.this, ExpenseAddActivity.class);
@@ -78,19 +77,17 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
-    public void onRestart()
-    {
+    public void onRestart() {
         super.onRestart();
         finish();
         startActivity(getIntent());
     }
 
-    private void getExpenseList(){
+    private void getExpenseList() {
 
-        SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
-        String token = sh.getString("token", "");
-        retrofitAPI = ApiClient.getApiClient(token);
+        retrofitAPI = ApiClient.getApiClient();
         Dialog dialog = ProgressUtil.showProgress(ExpenseActivity.this);
 
         Call<ExpenseModal> call = retrofitAPI.getExpense("0");
@@ -98,10 +95,10 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ExpenseModal> call, Response<ExpenseModal> response) {
                 dialog.dismiss();
-            if(response.code() == 200) {                // this method is called when we get response from our api.
-                ExpenseModal responseFromAPI = response.body();
+                if (response.code() == 200) {                // this method is called when we get response from our api.
+                    ExpenseModal responseFromAPI = response.body();
                     b = responseFromAPI.getResult();
-                ExpenseAdapter adapter = new ExpenseAdapter(ExpenseActivity.this, b);
+                    ExpenseAdapter adapter = new ExpenseAdapter(ExpenseActivity.this, b);
                     ListView listView = (ListView) findViewById(R.id.contactsListView);
                     listView.setAdapter(adapter);
                 }
@@ -110,11 +107,10 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ExpenseModal> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(ExpenseActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ExpenseActivity.this, "failed added to API" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
 
 
     @Override

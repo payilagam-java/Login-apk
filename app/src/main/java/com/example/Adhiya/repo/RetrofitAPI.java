@@ -6,7 +6,7 @@ import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.CollectionModal;
 import com.example.Adhiya.modal.ExpenseModal;
 import com.example.Adhiya.modal.LineModal;
-import com.example.Adhiya.modal.ObjectModal;
+import com.example.Adhiya.modal.LoanStatus;
 import com.example.Adhiya.modal.OraganizationModal;
 import com.example.Adhiya.modal.ResponseModal;
 import com.example.Adhiya.modal.SendCollection;
@@ -23,10 +23,10 @@ public interface RetrofitAPI {
 
     @POST("api/Borrower/GetBorrower")
     @Headers({"Content-Type: application/json"})
-    Call<BorrowerModal> getBorrower(@Body String body);
+        Call<ResponseModal<BorrowerModal>> getBorrower(@Body String body);
 
     @POST("/api/Borrower/InsertUpdateBorrower")
-    Call<ResponseModal> addEditBorrower(@Body BorrowerModal borrowerModal);
+    Call<ResponseModal<BorrowerModal>> addEditBorrower(@Body BorrowerModal borrowerModal);
 
     @POST("/api/Borrower/DeleteBorrower")
     Call<ResponseModal> deleteBorrower(@Body String body);
@@ -41,11 +41,15 @@ public interface RetrofitAPI {
 
     @POST("api/Loan/GetBorrowerLoan")
     @Headers({"Content-Type: application/json"})
-    Call<BorrowerLoanModal> getLoan(@Body String body);
+    Call<ResponseModal<BorrowerLoanModal>> getLoan(@Body String body);
 
     @POST("api/Loan/InsertUpdateBorrowerLoan")
     @Headers({"Content-Type: application/json"})
     Call<ResponseModal> addEditLoan(@Body BorrowerLoanModal body);
+
+    @POST("api/Loan/ChangeBorrowerLoanStatus")
+    @Headers({"Content-Type: application/json"})
+        Call<ResponseModal> loanStatusChange(@Body LoanStatus body);
 
     @POST("api/Collection/GetCollection")
     @Headers({"Content-Type: application/json"})
@@ -64,4 +68,8 @@ public interface RetrofitAPI {
     @POST("api/Collection/InsertUpdateExpense")
     @Headers({"Content-Type: application/json"})
     Call<ResponseModal> addEditExpense(@Body ExpenseModal body);
+
+    @POST("api/Collection/DeleteLineExpense")
+    @Headers({"Content-Type: application/json"})
+    Call<ResponseModal> deleteExpense(@Body String body);
 }

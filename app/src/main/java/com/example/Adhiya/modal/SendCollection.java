@@ -3,7 +3,9 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SendCollection {
+import java.io.Serializable;
+
+public class SendCollection implements Serializable {
 
     private String lineId;
     private String organizationId;

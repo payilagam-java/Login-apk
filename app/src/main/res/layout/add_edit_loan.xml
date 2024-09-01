@@ -20,40 +20,25 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     <TextView
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:id="@+id/cashOnHand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textSize="20dp"
+        android:textColor="@color/Red"
         android:textStyle="bold" />
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
         android:fillViewport="false">
      <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
-
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
-             <TextView
-                 android:id="@+id/borrowerLabel"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Borrower"
-                 android:textStyle="bold" />
-             <TextView
-                 android:id="@+id/borrower"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:hint="Select borrower"
-                 android:layout_marginTop="20dp"/>
-         </RelativeLayout>
 
          <RelativeLayout
              android:layout_width="match_parent"
@@ -70,16 +55,36 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:hint="Select Line"
-                 android:layout_marginTop="20dp"/>
+                 android:layout_marginTop="25dp"/>
          </RelativeLayout>
+
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp">
+             <TextView
+                 android:id="@+id/borrowerLabel"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Borrower"
+                 android:textStyle="bold" />
+             <TextView
+                 android:id="@+id/borrower"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:hint="Select borrower"
+                 android:layout_marginTop="25dp"/>
+         </RelativeLayout>
+
 
 
          <!-- First Name (mandatory) -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
                 <TextView
-                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Line Type"
@@ -88,9 +93,8 @@
                     android:id="@+id/linetype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:layout_marginTop="35dp"
-                    android:importantForAccessibility="yes"/>
+                    android:text="-"
+                    android:layout_marginTop="25dp"/>
             </RelativeLayout>
 
 
@@ -108,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:layout_marginTop="35dp"/>
+                    android:layout_marginTop="25dp"/>
             </RelativeLayout>
 
 
@@ -126,91 +130,7 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:inputType="phone"
-                 android:layout_marginTop="35dp"/>
-         </RelativeLayout>
-
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Loan Amount"
-                 android:textStyle="bold"/>
-             <EditText
-                 android:id="@+id/laonamount"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:inputType="text"
-                 android:layout_marginTop="35dp"/>
-         </RelativeLayout>
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Interest Amount"
-                 android:textStyle="bold"/>
-             <EditText
-                 android:id="@+id/intamount"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:inputType="text"
-                 android:layout_marginTop="35dp"/>
-         </RelativeLayout>
-
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="DisbursedLoanAmount"
-                 android:textStyle="bold"/>
-             <EditText
-                 android:id="@+id/distursed"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:inputType="text"
-                 android:layout_marginTop="35dp"/>
-         </RelativeLayout>
-
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Payable Amount"
-                 android:textStyle="bold"/>
-             <EditText
-                 android:id="@+id/payable"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:inputType="text"
-                 android:layout_marginTop="35dp"/>
-         </RelativeLayout>
-
-         <RelativeLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="Daily Pay Amount "
-                 android:textStyle="bold"/>
-             <EditText
-                 android:id="@+id/daily"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:inputType="text"
-                 android:layout_marginTop="35dp"/>
+                 android:layout_marginTop="25dp"/>
          </RelativeLayout>
 
          <RelativeLayout
@@ -219,6 +139,7 @@
              android:layout_marginTop="15dp">
 
              <TextView
+                 android:id="@+id/duration"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:text="Number Of Days"
@@ -229,7 +150,7 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:inputType="text"
-                 android:layout_marginTop="35dp"/>
+                 android:layout_marginTop="25dp"/>
          </RelativeLayout>
 
          <RelativeLayout
@@ -247,8 +168,95 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:inputType="text"
+                 android:layout_marginTop="25dp"/>
+         </RelativeLayout>
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Loan Amount"
+                 android:textStyle="bold"/>
+             <EditText
+                 android:id="@+id/laonamount"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"
+                 android:layout_marginTop="25dp"/>
+         </RelativeLayout>
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Interest Amount"
+                 android:textStyle="bold"/>
+             <TextView
+                 android:id="@+id/intamount"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"
                  android:layout_marginTop="35dp"/>
          </RelativeLayout>
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="DisbursedLoanAmount"
+                 android:textStyle="bold"/>
+             <TextView
+                 android:id="@+id/distursed"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"
+                 android:layout_marginTop="35dp"/>
+         </RelativeLayout>
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp">
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Payable Amount"
+                 android:textStyle="bold"/>
+             <TextView
+                 android:id="@+id/payable"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"
+                 android:layout_marginTop="25dp"/>
+         </RelativeLayout>
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="15dp">
+             <TextView
+                 android:id="@+id/payAmt"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Daily Pay Amount "
+                 android:textStyle="bold"/>
+             <TextView
+                 android:id="@+id/daily"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:inputType="text"
+                 android:layout_marginTop="25dp"/>
+         </RelativeLayout>
+
+
 
          <RelativeLayout
              android:layout_width="match_parent"
@@ -264,7 +272,7 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:hint="Select Date"
-                 android:layout_marginTop="35dp"/>
+                 android:layout_marginTop="25dp"/>
          </RelativeLayout>
 
          <RelativeLayout
@@ -281,10 +289,10 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:hint="Select Date"
-                 android:layout_marginTop="35dp"/>
+                 android:layout_marginTop="25dp"/>
          </RelativeLayout>
 
-         <RelativeLayout
+         <!--<RelativeLayout
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_marginTop="15dp">
@@ -305,7 +313,7 @@
                  android:entries="@array/status"
                  android:hint="Select Gender" />
 
-         </RelativeLayout>
+         </RelativeLayout>-->
 
          <RelativeLayout
              style="?android:attr/buttonBarStyle"
