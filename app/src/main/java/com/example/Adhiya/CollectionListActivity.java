@@ -3,10 +3,12 @@ package com.example.Adhiya;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CollectionListActivity extends AppCompatActivity {
+public class CollectionListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private ListView listView;
     private ArrayAdapter<BorrowerLoanModal> adapter;
@@ -37,6 +39,7 @@ public class CollectionListActivity extends AppCompatActivity {
     private SendCollection sendCollection;
     ArrayList<CollectionModal> Refer;
     private FloatingActionButton addButton;
+        SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,10 @@ public class CollectionListActivity extends AppCompatActivity {
 
         addButton = findViewById(R.id.addButton);
         addButton.setVisibility(View.INVISIBLE);
+
+        searchView = findViewById(R.id.searchView);
+        listView.setTextFilterEnabled(true);
+        setupSearchView();
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
 //        {
 //            public void onItemClick(AdapterView<?> parent, View view,int position, long id)
@@ -76,6 +83,28 @@ public class CollectionListActivity extends AppCompatActivity {
 //                startActivity(intent);
 //            }
 //        });
+    }
+
+    private void setupSearchView() {
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(CollectionListActivity.this);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryHint("Search Here");
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(newText);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
     }
 
     private void postData( ){

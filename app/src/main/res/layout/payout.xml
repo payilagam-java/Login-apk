@@ -7,21 +7,25 @@
     android:orientation="vertical">
     <include layout="@layout/header" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fillViewport="false"
         android:orientation="vertical"
         android:padding="10dp">
 
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
     <TextView
         android:layout_marginTop="10dp"
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Borrower Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/borrowerName"
         android:layout_width="match_parent"
@@ -36,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Line Name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/lineName"
         android:layout_width="match_parent"
@@ -50,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Loan Amount"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/payableAmount"
         android:layout_width="match_parent"
@@ -63,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Balance"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"/>
     <TextView
         android:id="@+id/balance"
         android:layout_width="match_parent"
@@ -76,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date of Pay"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textStyle="bold"/>
         <TextView
             android:id="@+id/dateofpay"
             android:layout_width="match_parent"
@@ -89,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pay Amount"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"/>
     <EditText
         android:id="@+id/editPayAmount"
         android:inputType="number"
@@ -103,13 +107,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pay Mode"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textStyle="bold"/>
     <Spinner
         android:id="@+id/spinnerMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
-        android:layout_marginTop="15dp"
+
         android:hint="Select Payment mode" />
 
 
@@ -121,5 +125,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="Pay" />
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

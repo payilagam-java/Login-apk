@@ -67,7 +67,7 @@ public class CollectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_collection);
         CommonUtil.getTitleBar(this,"collection");
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

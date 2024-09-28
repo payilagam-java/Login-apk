@@ -3,9 +3,10 @@ package com.example.Adhiya.modal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class BorrowerLoanModal  {
+public class BorrowerLoanModal implements Serializable {
 	@SerializedName("object")
 	@Expose
 	private List<BorrowerLoanModal> loan;
@@ -151,7 +152,7 @@ public class BorrowerLoanModal  {
 	}
 
 	public void setBId(int bId) {
-		this.BId = BId;
+		this.BId = bId;
 	}
 
 	public String getBorrowerName() {

@@ -19,6 +19,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:title="Collection Details"
             app:titleTextColor="@android:color/white" />
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search Borrower"
+            android:iconifiedByDefault="true" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

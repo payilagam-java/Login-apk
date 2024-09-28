@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import com.example.splash.R;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -41,11 +44,65 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExpenseAdapter extends ArrayAdapter<ExpenseModal> {
+public class ExpenseAdapter extends ArrayAdapter<ExpenseModal>implements Filterable {
     Context context;
+    public List<ExpenseModal> orig;
+    List<ExpenseModal> users;
     public ExpenseAdapter(Context context, List<ExpenseModal> users) {
         super(context, 0, users);
         this.context = context;
+        this.users = users;
+    }
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<ExpenseModal> results = new ArrayList<ExpenseModal>();
+                if (orig == null)
+                    orig = users;
+                if (constraint != null) {
+                    if (orig != null && orig.size() > 0) {
+                        for (final ExpenseModal g : orig) {
+                            if (g.getLineName().toLowerCase()
+                                    .contains(constraint.toString()) || g.getDateOfExpense().toUpperCase()
+                                    .contains(constraint.toString())) {
+                                results.add(g);
+                            }
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                users = (ArrayList<ExpenseModal>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        return users.size();
+    }
+
+    @Override
+    public ExpenseModal getItem(int position) {
+        return users.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -58,6 +115,7 @@ public class ExpenseAdapter extends ArrayAdapter<ExpenseModal> {
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
         TextView tvLine = (TextView) convertView.findViewById(R.id.tvLne);
+        TextView tvdate = (TextView) convertView.findViewById(R.id.tvdate);
         ImageButton tvedit = (ImageButton) convertView.findViewById(R.id.editbutton);
         ImageButton tvdelete = (ImageButton) convertView.findViewById(R.id.deletebutton);
 
@@ -70,6 +128,7 @@ public class ExpenseAdapter extends ArrayAdapter<ExpenseModal> {
 //        }
 
         tvName.setText(user.getLineName());
+        tvdate.setText(user.getDateOfExpense().split("T")[0]);
         tvHome.setText(user.getExpenseReason());
         tvLine.setText(user.getAmount());
 

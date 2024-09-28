@@ -44,8 +44,21 @@
             android:text="HomeTown" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_weight="90">
+    <ImageButton
+        android:layout_weight="5"
+        android:layout_gravity="center_vertical"
 
-
+        android:id="@+id/loanedit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:srcCompat="@drawable/baseline_edit_24" />
     <ImageButton
         android:src="@drawable/baseline_published_with_changes_24"
         android:layout_weight="5"
@@ -57,7 +70,7 @@
         android:text="Change status"
         android:minHeight="0dp"
        android:textColor="@color/black" />
-
+    </LinearLayout>
     <!--<Switch
         android:theme="@style/SwitchTheme"
         android:focusable="false"

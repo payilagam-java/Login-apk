@@ -32,6 +32,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="test" />
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="0dp"
+            android:textColor="@color/black"
+            android:textSize="14dp"
+            android:id="@+id/tvdate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="test" />
 
         <TextView
             android:layout_marginLeft="15dp"

@@ -74,7 +74,7 @@
         android:layout_weight="5"
         android:background="@color/white"
         android:padding="10dp"
-        app:srcCompat="@drawable/baseline_currency_rupee_24" />
+        app:srcCompat="@drawable/baseline_edit_24" />
 
     <ImageButton
         android:id="@+id/history"

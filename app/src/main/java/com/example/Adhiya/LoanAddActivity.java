@@ -2,6 +2,7 @@ package com.example.Adhiya;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -69,6 +70,7 @@ public class LoanAddActivity extends AppCompatActivity {
         List<BorrowerModal> b;
     List<LineModal> lineList;
     BorrowerLoanModal blm = new BorrowerLoanModal();
+    BorrowerLoanModal editloan;
     LineModal bm;
     void calc(){
         double loan = Double.parseDouble(laonamount.getText().toString());
@@ -103,7 +105,8 @@ public class LoanAddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_loan);
-        CommonUtil.getTitleBar(this,"Borrower Loan");
+
+
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        toolbar.setTitle("Add Loan");
 //        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
@@ -142,7 +145,35 @@ public class LoanAddActivity extends AppCompatActivity {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //        status.setAdapter(adapter1);
 //        status.setOnItemSelectedListener(onItemSelectedListener1);
+        String title = "Add Loan";
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("EDIT");
+        if (args != null) {
+            title = "Edit Loan";
 
+            editloan = (BorrowerLoanModal) args.getSerializable("borrower");
+            blm = editloan;
+            borrower.setText(editloan.getBorrowerName());
+            line.setText(editloan.getLineName());
+            linetype.setText(editloan.getLineTypeName());
+            deducted.setText(editloan.getDeductedAmount());
+            interest.setText(String.valueOf(editloan.getInterestPercentage()));
+            laonamount.setText(editloan.getLoanAmount());
+            distursed.setText(editloan.getDisbursedAmount());
+            payable.setText(editloan.getPayableAmount());
+            daily.setText(editloan.getPayAmount());
+            intamount.setText(editloan.getInterestAmount());
+//            daily.setText(editloan.getDuration());
+//            nodays.setText(editloan.getDuration());
+           // beforeInt.setText(editloan.is() == true ? "Yes":"No");
+            nodays.setText(String.valueOf(editloan.getDuration()));
+            disdate.setText(editloan.getDisbursedDate().split("T")[0]);
+            duedate.setText(editloan.getDueDate().split("T")[0]);
+            blm.setBId(Integer.valueOf(editloan.getBId()));
+            blm.setBorrowerName(editloan.getBorrowerName());
+
+        }
+        CommonUtil.getTitleBar(this,title);
 
         laonamount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -153,7 +184,7 @@ public class LoanAddActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // this function is called when text is edited
-                Toast.makeText(LoanAddActivity.this,beforeInt.getText().toString(),Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(LoanAddActivity.this,beforeInt.getText().toString(),Toast.LENGTH_SHORT).show();
                 if(!(beforeInt.getText().toString().equals("")) && !(laonamount.getText().toString().equals(""))) {
                     calc();
                 }
@@ -246,6 +277,7 @@ public class LoanAddActivity extends AppCompatActivity {
                         String value =adapter.getItem(position).getValue();
                         borrower.setText(text);
                         blm.setBorrowerId(value);
+                       // Toast.makeText(LoanAddActivity.this,value,Toast.LENGTH_SHORT).show();
                         blm.setBId(Integer.valueOf(value));
                         blm.setBorrowerName(text);
                         dialog.dismiss();
@@ -331,7 +363,7 @@ public class LoanAddActivity extends AppCompatActivity {
                 blm.setInterestAmount(intamount.getText().toString().trim());
                 blm.setLoanStatusId(1);
                 blm.setLoanId("");
-                blm.setPayAmount("0");
+                blm.setPayAmount("100.00");
                 postData(blm);
             }
         });

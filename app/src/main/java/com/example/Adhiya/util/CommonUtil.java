@@ -2,6 +2,7 @@ package com.example.Adhiya.util;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,9 +31,11 @@ public class CommonUtil {
 //        this.context = context;
 //    }
 
-    public static void getTitleBar(Activity view,String title){
+    @SuppressLint("SuspiciousIndentation")
+    public static void getTitleBar(Activity view, String title){
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         toolbar.setTitle(title);
+        if(!title.equals("Dashboard"))
         toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
         toolbar.inflateMenu(R.menu.borrower_menu);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

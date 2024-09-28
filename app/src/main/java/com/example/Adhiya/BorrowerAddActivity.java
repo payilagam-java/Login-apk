@@ -1,10 +1,20 @@
 package com.example.Adhiya;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,6 +27,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.Adhiya.adapter.MySpinnerAdapter;
 import com.example.Adhiya.modal.BorrowerModal;
@@ -27,7 +39,9 @@ import com.example.Adhiya.network.ApiClient;
 import com.example.Adhiya.repo.RetrofitAPI;
 import com.example.Adhiya.util.ActionUtil;
 import com.example.Adhiya.util.CommonUtil;
+import com.example.Adhiya.util.GPSTracker;
 import com.example.Adhiya.util.ProgressUtil;
+
 import com.example.splash.R;
 
 import java.util.ArrayList;
@@ -54,34 +68,65 @@ public class BorrowerAddActivity extends AppCompatActivity implements ActionUtil
     List<BorrowerModal> b;
     List<LineModal> lineList;
     ApiClient apiClient = new ApiClient(this);
+    private final int REQUEST_FINE_LOCATION = 1234;
+    LocationManager locationManager;
+    Context mContext;
+    LocationListener locationListenerGPS=new LocationListener() {
+        @Override
+        public void onLocationChanged(android.location.Location location) {
+            double latitude=location.getLatitude();
+            double longitude=location.getLongitude();
+            borrowerModal.setLatitude(latitude+"");
+            borrowerModal.setLongitude(longitude+"");
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {   }
 
+        @Override
+        public void onProviderEnabled(String provider) {   }
+
+        @Override
+        public void onProviderDisabled(String provider) {    }
+    };
+
+    private void isLocationEnabled() {
+
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            AlertDialog.Builder alertDialog=new AlertDialog.Builder(mContext);
+            alertDialog.setTitle("Enable Location");
+            alertDialog.setMessage("Your locations setting is not enabled. Please enabled it in settings menu.");
+            alertDialog.setPositiveButton("Location Settings", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+            });
+            alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which){
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alert=alertDialog.create();
+            alert.show();
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_borrower);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        toolbar.setTitle("Add Borrower");
-//        toolbar.setNavigationIcon(R.drawable.baseline_arrow_back_24);
-//        toolbar.inflateMenu(R.menu.borrower_menu);
-//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                if (item.getItemId() == R.id.delete) {
-//                    // do something
-//                }
-//                return false;
-//            }
-//        });
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+        }
 
+        mContext=this;
+        locationManager=(LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER,
+                2000,
+                10, locationListenerGPS);
+        isLocationEnabled();
 
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // back button pressed
-//                finish();
-//            }
-//        });
         //Get the object from input fields
         editTextFirstName = findViewById(R.id.editTextFirstName);
         editTextLasttName = findViewById(R.id.editTextLasttName);
@@ -206,7 +251,7 @@ public class BorrowerAddActivity extends AppCompatActivity implements ActionUtil
             borrowerModal.setLastName(editTextLasttName.getText().toString().trim());
             borrowerModal.setMobileNubmer(editMobile.getText().toString().trim());
             borrowerModal.setBorrowerOccupation(editOccupation.getText().toString().trim());
-            borrowerModal.setLineId("1");
+          //  borrowerModal.setLineId("1");
             postData(borrowerModal);
         });
     }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,13 +43,63 @@ import retrofit2.Response;
 public class CollectionAdapter extends ArrayAdapter<CollectionModal> {
     Context context;
     SendCollection date;
-
+    public List<CollectionModal> orig;
+    List<CollectionModal> users;
     public CollectionAdapter(Context context, List<CollectionModal> users, SendCollection date) {
         super(context, 0, users);
         this.context = context;
         this.date = date;
+        this.users = users;
+    }
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<CollectionModal> results = new ArrayList<CollectionModal>();
+                if (orig == null)
+                    orig = users;
+                if (constraint != null) {
+                    if (orig != null && orig.size() > 0) {
+                        for (final CollectionModal g : orig) {
+                            if (g.getBorrowerName().toLowerCase()
+                                    .contains(constraint.toString()) || g.getBorrowerId().contains(constraint.toString().toUpperCase())) {
+                                results.add(g);
+                            }
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                users = (ArrayList<CollectionModal>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
+    @Override
+    public int getCount() {
+        return users.size();
+    }
+
+    @Override
+    public CollectionModal getItem(int position) {
+        return users.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         CollectionModal user = getItem(position);
@@ -70,6 +122,9 @@ public class CollectionAdapter extends ArrayAdapter<CollectionModal> {
         field5.setText("Amount Paid: "+String.valueOf(user.getAmountofPaid()));
 
         ImageButton pay= (ImageButton) convertView.findViewById(R.id.pay);
+        if(user.getAmountofPaid().equals("0.00")) {
+            pay.setImageResource(R.drawable.baseline_currency_rupee_24);//
+        }
         ImageButton history = (ImageButton) convertView.findViewById(R.id.history);
         ImageButton call = (ImageButton) convertView.findViewById(R.id.call);
         pay.setOnClickListener(new View.OnClickListener() {

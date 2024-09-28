@@ -29,5 +29,9 @@
         <item>Closed</item>
         <item>Default</item>
     </string-array>
+    <string name="GPSAlertDialogTitle">GPS is setting</string>
+    <string name="GPSAlertDialogMessage">GPS is not enabled. Do you want to go to setting menu</string>
+
+    <string name="settings">Settings</string>
 
 </resources>

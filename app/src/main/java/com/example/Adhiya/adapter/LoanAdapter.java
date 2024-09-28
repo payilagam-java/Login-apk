@@ -6,17 +6,23 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.Adhiya.BorrowerAddActivity;
+import com.example.Adhiya.LoanAddActivity;
 import com.example.Adhiya.modal.BorrowerLoanModal;
+import com.example.Adhiya.modal.BorrowerModal;
 import com.example.Adhiya.modal.LoanStatus;
 import com.example.Adhiya.modal.ResponseModal;
 import com.example.Adhiya.network.ApiClient;
@@ -24,6 +30,8 @@ import com.example.Adhiya.repo.RetrofitAPI;
 import com.example.Adhiya.util.ProgressUtil;
 import com.example.splash.R;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,11 +41,65 @@ import retrofit2.Response;
 public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
     Context context;
     BorrowerLoanModal user;
+
+    public List<BorrowerLoanModal> orig;
     List<BorrowerLoanModal> users;
     public LoanAdapter(Context context, List<BorrowerLoanModal> users) {
         super(context, 0, users);
         this.context = context;
         this.users = users;
+    }
+
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<BorrowerLoanModal> results = new ArrayList<BorrowerLoanModal>();
+                if (orig == null)
+                    orig = users;
+                if (constraint != null) {
+                    if (orig != null && orig.size() > 0) {
+                        for (final BorrowerLoanModal g : orig) {
+                            if (g.getBorrowerName().toLowerCase()
+                                    .contains(constraint.toString()) || g.getBorrowerId().contains(constraint.toString().toUpperCase())) {
+                                results.add(g);
+                            }
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                users = (ArrayList<BorrowerLoanModal>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getCount() {
+        return users.size();
+    }
+
+    @Override
+    public BorrowerLoanModal getItem(int position) {
+        return users.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -51,9 +113,26 @@ public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
         TextView tvHome = (TextView) convertView.findViewById(R.id.tvHome);
         TextView status = (TextView) convertView.findViewById(R.id.tvLne);
         ImageButton tvedit = (ImageButton) convertView.findViewById(R.id.editbutton);
+        ImageButton loanEdit = (ImageButton) convertView.findViewById(R.id.loanedit);
 
-        if(!user.getLoanStatus().equals("Active")){
+        if(user.isCollectionStatus()==true){
+            loanEdit.setVisibility(View.INVISIBLE);
+        }else{
             tvedit.setVisibility(View.INVISIBLE);
+        }
+        loanEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, LoanAddActivity.class);
+                Bundle args = new Bundle();
+                args.putSerializable("borrower",(Serializable)user);
+                intent.putExtra("EDIT",args);
+                context.startActivity(intent);
+            }
+        });
+        if(!user.getLoanStatus().equals("Active")){
+
+            loanEdit.setVisibility(View.INVISIBLE);
         }
 
         tvedit.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +179,7 @@ public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
                     userselected.setLoanStatusId(2);
                 }
                 if(status[i].equals("Default")){
-                    userselected.setLoanStatusId(3);
+                    userselected.setLoanStatusId(4);
                 }
                 //select = status[i];
             }

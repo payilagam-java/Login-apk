@@ -4,10 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ExpenseActivity extends AppCompatActivity {
+public class ExpenseActivity extends AppCompatActivity implements SearchView.OnQueryTextListener{
 
     private ListView listView;
     private FloatingActionButton addContactButton;
@@ -42,7 +44,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
     List<ExpenseModal> b;
-
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +78,30 @@ public class ExpenseActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        searchView = findViewById(R.id.searchView);
+        listView.setTextFilterEnabled(true);
+        setupSearchView();
+    }
+    private void setupSearchView() {
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(ExpenseActivity.this);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryHint("Search Here");
+    }
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(newText);
+        }
+        return true;
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
     @Override
     public void onRestart() {
         super.onRestart();

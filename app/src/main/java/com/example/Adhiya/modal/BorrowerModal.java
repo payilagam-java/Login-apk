@@ -9,6 +9,15 @@ import java.util.List;
 
 public class BorrowerModal  implements Serializable{
 
+
+    @SerializedName("Latitude")
+    @Expose
+    private String Latitude;
+
+    @SerializedName("Longitude")
+    @Expose
+    private String Longitude;
+
     @SerializedName("id")
     @Expose
     private int id;
@@ -199,5 +208,21 @@ public class BorrowerModal  implements Serializable{
 
     public void setLineId(String lineId) {
         this.lineId = lineId;
+    }
+
+    public String getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        Latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        Longitude = longitude;
     }
 }

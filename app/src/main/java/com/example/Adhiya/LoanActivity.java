@@ -2,9 +2,11 @@ package com.example.Adhiya;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class LoanActivity extends AppCompatActivity implements ActionUtil {
+public class LoanActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,ActionUtil {
 
     private ListView listView;
     private FloatingActionButton addButton;
@@ -33,7 +35,7 @@ public class LoanActivity extends AppCompatActivity implements ActionUtil {
     private RetrofitAPI retrofitAPI;
     private static final int REQUEST_ADD_CONTACT = 1;
     ApiClient apiClient = new ApiClient(this);
-
+    SearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,32 @@ public class LoanActivity extends AppCompatActivity implements ActionUtil {
                 startActivity(intent);
             }
         });
+        searchView = findViewById(R.id.searchView);
+        listView.setTextFilterEnabled(true);
+        setupSearchView();
     }
+    private void setupSearchView() {
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(LoanActivity.this);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setQueryHint("Search Here");
+    }
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (TextUtils.isEmpty(newText)) {
+            listView.clearTextFilter();
+        } else {
+            listView.setFilterText(newText);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+
 
     @Override
     public void onRestart() {

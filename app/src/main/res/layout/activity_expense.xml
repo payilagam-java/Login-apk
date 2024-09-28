@@ -19,7 +19,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:title="Line Expense"
             app:titleTextColor="@android:color/white" />
-
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search Expenses"
+            android:iconifiedByDefault="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Floating Action Button -->
