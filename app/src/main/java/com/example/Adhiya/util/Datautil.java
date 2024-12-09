@@ -7,4 +7,5 @@ public class Datautil {
     public final static String APK_KEY ="zdeftryuioplmnbhg";
     public final static String GETALL ="0";
     public final static String LOGOUT_MSG = "Are you sure you want to Logout?";
+
 }
