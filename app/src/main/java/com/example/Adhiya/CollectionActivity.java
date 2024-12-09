@@ -211,7 +211,8 @@ public class CollectionActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             spinnerOrg.setText(adapter.getItem(position).getText());
                             sendCollection.setOrganizationId(adapter.getItem(position).getValue());
-                            // Dismiss dialog
+                            spinnerLine.setText("");
+                            sendCollection.setLineId("");
                             dialog.dismiss();
                         }
                     });

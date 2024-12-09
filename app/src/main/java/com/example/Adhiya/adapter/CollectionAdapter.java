@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.Adhiya.CollectionListActivity;
 import com.example.Adhiya.ExpenseAddActivity;
 import com.example.Adhiya.LoanAddActivity;
+import com.example.Adhiya.LoanHistory;
 import com.example.Adhiya.PaymentActivity;
 import com.example.Adhiya.modal.BorrowerLoanModal;
 import com.example.Adhiya.modal.BorrowerModal;
@@ -122,8 +123,14 @@ public class CollectionAdapter extends ArrayAdapter<CollectionModal> {
         field5.setText("Amount Paid: "+String.valueOf(user.getAmountofPaid()));
 
         ImageButton pay= (ImageButton) convertView.findViewById(R.id.pay);
-        if(user.getAmountofPaid().equals("0.00")) {
-            pay.setImageResource(R.drawable.baseline_currency_rupee_24);//
+        try {
+            if (Float.parseFloat(user.getAmountofPaid()) == 0) {
+                pay.setImageResource(R.drawable.baseline_currency_rupee_24);//
+            }else{
+                pay.setImageResource(R.drawable.baseline_edit_24);
+            }
+        }catch (NumberFormatException e){
+
         }
         ImageButton history = (ImageButton) convertView.findViewById(R.id.history);
         ImageButton call = (ImageButton) convertView.findViewById(R.id.call);
@@ -136,6 +143,13 @@ public class CollectionAdapter extends ArrayAdapter<CollectionModal> {
                 args.putSerializable("date",(Serializable) date);
                 intent.putExtra("BUNDLE",args);
                 //intent.putExtra("date",date);
+                context.startActivity(intent);
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, LoanHistory.class);
                 context.startActivity(intent);
             }
         });

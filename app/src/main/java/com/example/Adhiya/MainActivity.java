@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //postData("Ad111","arivu");
+        postData("Ad111","arivu");
         // 0Initialize views
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
@@ -58,38 +58,40 @@ public class MainActivity extends AppCompatActivity {
                     passwordEditText.setError("Please enter your password");
                     return;
                 }
-                postData(enteredUsername, enteredPassword);
+             //   postData(enteredUsername, enteredPassword);
             }
         });
     }
 
     private void postData(String name, String pass) {
-        retrofitAPI = ApiClient.getApiLogin();
-        UserModal modal = new UserModal(name, pass, Datautil.APK_KEY);
-        Call<String> call = retrofitAPI.login(modal);
-        Dialog dialog = ProgressUtil.showProgress(MainActivity.this);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                dialog.dismiss();
-                if (response.code() == 200) {                // this method is called when we get response from our api.
-                    String responseFromAPI = response.body();
-                    new ApiClient(MainActivity.this).SetString(responseFromAPI);
-                    Intent borrowerIntent = new Intent(MainActivity.this, DashboardActivity.class);
-                    startActivity(borrowerIntent);
-                    finish();
-                } else if (response.code() == 401) {
-                    Toast.makeText(MainActivity.this, "Invalid Username and password", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Something went wrong!!" + response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+        retrofitAPI = new ApiClient(this).getApiLogin();
+        if (retrofitAPI != null) {
+            UserModal modal = new UserModal(name, pass, Datautil.APK_KEY);
+            Call<String> call = retrofitAPI.login(modal);
+            Dialog dialog = ProgressUtil.showProgress(MainActivity.this);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    dialog.dismiss();
+                    if (response.code() == 200) {                // this method is called when we get response from our api.
+                        String responseFromAPI = response.body();
+                        new ApiClient(MainActivity.this).SetString(responseFromAPI);
+                        Intent borrowerIntent = new Intent(MainActivity.this, DashboardActivity.class);
+                        startActivity(borrowerIntent);
+                        finish();
+                    } else if (response.code() == 401) {
+                        Toast.makeText(MainActivity.this, "Invalid Username and password", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Something went wrong!!" + response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong!!", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(MainActivity.this, "Something went wrong!!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+        }
     }
 }

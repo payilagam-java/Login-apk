@@ -40,7 +40,7 @@ import retrofit2.Response;
 
 public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
     Context context;
-    BorrowerLoanModal user;
+
 
     public List<BorrowerLoanModal> orig;
     List<BorrowerLoanModal> users;
@@ -104,7 +104,7 @@ public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        user = getItem(position);
+        BorrowerLoanModal   user = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.loan_item_list, parent, false);
         }
@@ -115,23 +115,25 @@ public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
         ImageButton tvedit = (ImageButton) convertView.findViewById(R.id.editbutton);
         ImageButton loanEdit = (ImageButton) convertView.findViewById(R.id.loanedit);
 
-        if(user.isCollectionStatus()==true){
+        if(user.isCollectionStatus()){
             loanEdit.setVisibility(View.INVISIBLE);
+            tvedit.setVisibility(View.VISIBLE);
         }else{
-            tvedit.setVisibility(View.INVISIBLE);
+            loanEdit.setVisibility(View.VISIBLE);
+                tvedit.setVisibility(View.INVISIBLE);
         }
         loanEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, LoanAddActivity.class);
                 Bundle args = new Bundle();
-                args.putSerializable("borrower",(Serializable)user);
+                args.putSerializable("loan",(Serializable)user);
                 intent.putExtra("EDIT",args);
                 context.startActivity(intent);
             }
         });
         if(!user.getLoanStatus().equals("Active")){
-
+            tvedit.setVisibility(View.INVISIBLE);
             loanEdit.setVisibility(View.INVISIBLE);
         }
 
@@ -146,7 +148,7 @@ public class LoanAdapter extends ArrayAdapter<BorrowerLoanModal> {
 
         tvName.setText(user.getBorrowerName()+"");
         tvHome.setText(user.getLoanAmount()+"");
-        status.setText(user.getLoanStatus());
+        status.setText(user.getLoanStatus()+"");
         if(user.getLoanStatusId() == 1){
             status.setTextColor(Color.GREEN);
         }

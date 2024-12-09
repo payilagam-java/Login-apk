@@ -292,13 +292,14 @@
                  android:layout_marginTop="25dp"/>
          </RelativeLayout>
 
-         <!--<RelativeLayout
+         <RelativeLayout
+             android:id="@+id/statuslayout"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:layout_marginTop="15dp">
+             android:layout_marginTop="10dp">
 
              <TextView
-                 android:id="@+id/textViewGenderLabel"
+                 android:id="@+id/textStatusLabel"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:text="Loan status"
@@ -308,19 +309,18 @@
                  android:id="@+id/status"
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:layout_below="@id/textViewGenderLabel"
-                 android:layout_marginTop="15dp"
+                 android:layout_below="@id/textStatusLabel"
                  android:entries="@array/status"
-                 android:hint="Select Gender" />
+                 android:hint="Select Status" />
 
-         </RelativeLayout>-->
+         </RelativeLayout>
 
          <RelativeLayout
              style="?android:attr/buttonBarStyle"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:orientation="horizontal"
-             android:layout_marginTop="25dp">
+             android:layout_marginTop="10dp">
              <Button
                  android:id="@+id/buttonSave"
                  style="?android:attr/absListViewStyle"

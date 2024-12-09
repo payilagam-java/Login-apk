@@ -11,6 +11,12 @@
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
         <item name="android:colorControlActivated">#148E13</item>
     </style>
+    <style name="Theme.Splash.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.Splash.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Splash.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

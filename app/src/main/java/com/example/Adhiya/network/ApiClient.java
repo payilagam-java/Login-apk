@@ -4,9 +4,12 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.example.Adhiya.MainActivity;
+import com.example.Adhiya.NoInternetActivity;
 import com.example.Adhiya.modal.ResponseModal;
 import com.example.Adhiya.repo.RetrofitAPI;
 import com.example.Adhiya.util.ActionUtil;
@@ -52,18 +55,30 @@ public class ApiClient {
     private static RetrofitAPI retrofitAPI = null;
 
     public static RetrofitAPI getApiLogin() {
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Datautil.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        retrofitAPI = retrofit.create(RetrofitAPI.class);
+        if (!DetectConnection.checkInternetConnection(context)) {
+            Intent i = new Intent(context, NoInternetActivity.class);
+            context.startActivity(i);
+
+        } else {
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(Datautil.BASEURL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            retrofitAPI = retrofit.create(RetrofitAPI.class);
+        }
         return retrofitAPI;
     }
 
     public static RetrofitAPI getApiClient() {
+        if (!DetectConnection.checkInternetConnection(context)) {
+            Intent i = new Intent(context, NoInternetActivity.class);
+            context.startActivity(i);
+
+        } else {
+
         String token = getToken();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -82,8 +97,8 @@ public class ApiClient {
                 .build();
 
         retrofitAPI = retrofit.create(RetrofitAPI.class);
+        }
         return retrofitAPI;
-
     }
 
     public static void getResponse(Call call, ActionUtil actionUtil) {
@@ -109,7 +124,7 @@ public class ApiClient {
             @Override
             public void onFailure(Call<ResponseModal> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(context, "API Faiure due to " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "API Faiure due to " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

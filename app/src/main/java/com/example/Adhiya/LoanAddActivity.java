@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class LoanAddActivity extends AppCompatActivity {
     private TextView deducted;
 
     private TextView interest;
-    private EditText    laonamount;
+    private EditText laonamount;
     private TextView intamount;
     private TextView distursed;
     private TextView payable;
@@ -62,21 +63,23 @@ public class LoanAddActivity extends AppCompatActivity {
     private TextView duedate;
 
     private TextView cashOnHand;
+    private TextView textStatusLabel;
     private Spinner status;
 
     private RetrofitAPI retrofitAPI;
     private Dialog dialog;
 
-        List<BorrowerModal> b;
+    List<BorrowerModal> b;
     List<LineModal> lineList;
     BorrowerLoanModal blm = new BorrowerLoanModal();
     BorrowerLoanModal editloan;
     LineModal bm;
-    void calc(){
+
+    void calc() {
         double loan = Double.parseDouble(laonamount.getText().toString());
         double intr = Double.parseDouble(interest.getText().toString());
         double day = Double.parseDouble(nodays.getText().toString());
-        double intamt = loan*intr/100;
+        double intamt = loan * intr / 100;
 
 //        if(bm.getLineType() == 2){
 //            day = day*7;
@@ -84,23 +87,24 @@ public class LoanAddActivity extends AppCompatActivity {
 //        if(bm.getLineType() ==3){
 //            day = day * 30;
 //        }
-        if(beforeInt.getText().toString().equals("No")){
+        if (beforeInt.getText().toString().equals("No")) {
             distursed.setText(laonamount.getText());
             intamount.setText(String.valueOf(intamt));
-            payable.setText(String.valueOf(loan+intamt));
-            daily.setText(String.valueOf(Math.round((loan+intamt)/day)));
-       }else{
-            distursed.setText(String.valueOf(loan-intamt));
+            payable.setText(String.valueOf(loan + intamt));
+            daily.setText(String.valueOf(Math.round((loan + intamt) / day)));
+        } else {
+            distursed.setText(String.valueOf(loan - intamt));
             intamount.setText(String.valueOf(intamt));
             payable.setText(String.valueOf(loan));
-            daily.setText(String.valueOf(Math.round((loan)/day)));
+            daily.setText(String.valueOf(Math.round((loan) / day)));
         }
     }
 
-    private String lineStr ;
-    private String bwrStr ;
-    private String lAmtStr ;
-    private String disDateStr ;
+    private String lineStr;
+    private String bwrStr;
+    private String lAmtStr;
+    private String disDateStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,22 +140,24 @@ public class LoanAddActivity extends AppCompatActivity {
         beforeInt = findViewById(R.id.before);
         disdate = findViewById(R.id.disdate);
         duedate = findViewById(R.id.duedate);
-        //status = findViewById(R.id.status);
-        ArrayList laonstatus= new ArrayList<SpinnerModal>();
-        laonstatus.add(new SpinnerModal("Active","Active"));
-        laonstatus.add(new SpinnerModal("Closed","Closed"));
+
+        textStatusLabel = findViewById(R.id.textStatusLabel);
+        status = findViewById(R.id.status);
+        ArrayList laonstatus = new ArrayList<SpinnerModal>();
+        laonstatus.add(new SpinnerModal("Active", "1"));
+        laonstatus.add(new SpinnerModal("Cancelled", "3"));
         MySpinnerAdapter adapter1 = new MySpinnerAdapter(LoanAddActivity.this,
                 android.R.layout.simple_spinner_item, laonstatus);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        status.setAdapter(adapter1);
-//        status.setOnItemSelectedListener(onItemSelectedListener1);
+        status.setAdapter(adapter1);
+        status.setOnItemSelectedListener(onItemSelectedListener1);
         String title = "Add Loan";
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("EDIT");
         if (args != null) {
             title = "Edit Loan";
 
-            editloan = (BorrowerLoanModal) args.getSerializable("borrower");
+            editloan = (BorrowerLoanModal) args.getSerializable("loan");
             blm = editloan;
             borrower.setText(editloan.getBorrowerName());
             line.setText(editloan.getLineName());
@@ -163,17 +169,24 @@ public class LoanAddActivity extends AppCompatActivity {
             payable.setText(editloan.getPayableAmount());
             daily.setText(editloan.getPayAmount());
             intamount.setText(editloan.getInterestAmount());
-//            daily.setText(editloan.getDuration());
-//            nodays.setText(editloan.getDuration());
-           // beforeInt.setText(editloan.is() == true ? "Yes":"No");
             nodays.setText(String.valueOf(editloan.getDuration()));
             disdate.setText(editloan.getDisbursedDate().split("T")[0]);
             duedate.setText(editloan.getDueDate().split("T")[0]);
+
             blm.setBId(Integer.valueOf(editloan.getBId()));
             blm.setBorrowerName(editloan.getBorrowerName());
-
+            // status.setSelection(Integer.parseInt(editloan.getLoanStatus()));
+            blm.setLoanStatusId(editloan.getLoanStatusId());
+            blm.setLoanId(editloan.getLoanId());
+        } else {
+            blm.setLoanStatusId(1);
+            RelativeLayout status = findViewById(R.id.statuslayout);
+            status.setVisibility(View.INVISIBLE);
+            status.setVisibility(View.INVISIBLE);
+            textStatusLabel.setVisibility(View.INVISIBLE);
+            blm.setLoanId("");
         }
-        CommonUtil.getTitleBar(this,title);
+        CommonUtil.getTitleBar(this, title);
 
         laonamount.addTextChangedListener(new TextWatcher() {
             @Override
@@ -184,8 +197,8 @@ public class LoanAddActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // this function is called when text is edited
-              //  Toast.makeText(LoanAddActivity.this,beforeInt.getText().toString(),Toast.LENGTH_SHORT).show();
-                if(!(beforeInt.getText().toString().equals("")) && !(laonamount.getText().toString().equals(""))) {
+                //  Toast.makeText(LoanAddActivity.this,beforeInt.getText().toString(),Toast.LENGTH_SHORT).show();
+                if (!(beforeInt.getText().toString().equals("")) && !(laonamount.getText().toString().equals(""))) {
                     calc();
                 }
             }
@@ -194,7 +207,7 @@ public class LoanAddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 // this function is called after text is edited
             }
-        } );
+        });
         disdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,18 +224,18 @@ public class LoanAddActivity extends AppCompatActivity {
                                                   int monthOfYear, int dayOfMonth) {
                                 // on below line we are setting date to our text view.
                                 disdate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                              //  duedate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                String dateStr = year+"-"+String.format("%02d", (monthOfYear + 1))+"-"+String.format("%02d", dayOfMonth);
+                                //  duedate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                String dateStr = year + "-" + String.format("%02d", (monthOfYear + 1)) + "-" + String.format("%02d", dayOfMonth);
                                 blm.setDisbursedDate(dateStr);
-                                int noofday = Integer.parseInt(nodays.getText().toString() !=""? nodays.getText().toString() : "0");
-                                if(bm.getLineType() == 2){
-                                    noofday = noofday*7;
+                                int noofday = Integer.parseInt(nodays.getText().toString() != "" ? nodays.getText().toString() : "0");
+                                if (bm.getLineType() == 2) {
+                                    noofday = noofday * 7;
                                 }
-                                if(bm.getLineType() ==3){
+                                if (bm.getLineType() == 3) {
                                     noofday = noofday * 30;
                                 }
-                                blm.setDueDate(CommonUtil.addDay(dateStr,noofday));
-                                duedate.setText(CommonUtil.addDisplayDay(dateStr,noofday));
+                                blm.setDueDate(CommonUtil.addDay(dateStr, noofday));
+                                duedate.setText(CommonUtil.addDisplayDay(dateStr, noofday));
                             }
                         },
                         year, month, day);
@@ -260,24 +273,24 @@ public class LoanAddActivity extends AppCompatActivity {
         borrower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList ReferModal= new ArrayList<SpinnerModal>();
-                for(BorrowerModal bm :b){
-                    if( blm.getLineId().equals(bm.getLineId())) {
+                ArrayList ReferModal = new ArrayList<SpinnerModal>();
+                for (BorrowerModal bm : b) {
+                    if (blm.getLineId().equals(bm.getLineId())) {
                         ReferModal.add(new SpinnerModal(bm.getFirstName(), String.valueOf(bm.getId())));
                     }
                 }
                 Dialog dialog = ProgressUtil.spinnerProgress(LoanAddActivity.this);
-                ListView listView=dialog.findViewById(R.id.list_view);
-                MySpinnerAdapter adapter=new MySpinnerAdapter(LoanAddActivity.this, R.layout.custom_spinner_item,ReferModal);
+                ListView listView = dialog.findViewById(R.id.list_view);
+                MySpinnerAdapter adapter = new MySpinnerAdapter(LoanAddActivity.this, R.layout.custom_spinner_item, ReferModal);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String text = adapter.getItem(position).getText();
-                        String value =adapter.getItem(position).getValue();
+                        String value = adapter.getItem(position).getValue();
                         borrower.setText(text);
                         blm.setBorrowerId(value);
-                       // Toast.makeText(LoanAddActivity.this,value,Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(LoanAddActivity.this,value,Toast.LENGTH_SHORT).show();
                         blm.setBId(Integer.valueOf(value));
                         blm.setBorrowerName(text);
                         dialog.dismiss();
@@ -290,13 +303,13 @@ public class LoanAddActivity extends AppCompatActivity {
         line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList ReferModal= new ArrayList<SpinnerModal>();
-                for(LineModal bm :lineList){
-                    ReferModal.add(new SpinnerModal(bm.getLineName(),bm.getId()));
+                ArrayList ReferModal = new ArrayList<SpinnerModal>();
+                for (LineModal bm : lineList) {
+                    ReferModal.add(new SpinnerModal(bm.getLineName(), bm.getId()));
                 }
                 Dialog dialog = ProgressUtil.spinnerProgress(LoanAddActivity.this);
-                ListView listView=dialog.findViewById(R.id.list_view);
-                MySpinnerAdapter adapter=new MySpinnerAdapter(LoanAddActivity.this, R.layout.custom_spinner_item,ReferModal);
+                ListView listView = dialog.findViewById(R.id.list_view);
+                MySpinnerAdapter adapter = new MySpinnerAdapter(LoanAddActivity.this, R.layout.custom_spinner_item, ReferModal);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -304,18 +317,18 @@ public class LoanAddActivity extends AppCompatActivity {
                         line.setText(adapter.getItem(position).getText());
                         blm.setLineId(adapter.getItem(position).getValue());
                         blm.setLineName(adapter.getItem(position).getText());
-                         bm =lineList.get(position);
+                        bm = lineList.get(position);
                         linetype.setText(bm.getLineTypeName());
                         blm.setLineTypeId(bm.getLineType());
-                        if(bm.getLineType() == 1){
+                        if (bm.getLineType() == 1) {
                             duration.setText("Number of Days");
                             payAmt.setText("Daily Pay Amount");
                         }
-                        if(bm.getLineType() == 2){
+                        if (bm.getLineType() == 2) {
                             duration.setText("Number of Weeks");
                             payAmt.setText("Weekly Pay Amount");
                         }
-                        if(bm.getLineType() ==3){
+                        if (bm.getLineType() == 3) {
                             duration.setText("Number of Months");
                             payAmt.setText("Monthly Pay Amount");
                         }
@@ -324,17 +337,12 @@ public class LoanAddActivity extends AppCompatActivity {
                         deducted.setText(String.valueOf(bm.getDeductionAmount()));
                         blm.setDeductionId(bm.getDeductionId());
                         blm.setDeductedAmount(String.valueOf(bm.getDeductionAmount()));
-
-                        beforeInt.setText(bm.isBeforeInterestDeduction() == true ? "Yes":"No");
-
-
+                        beforeInt.setText(bm.isBeforeInterestDeduction() == true ? "Yes" : "No");
                         nodays.setText(String.valueOf(bm.getDuration()));
                         blm.setDurationId(bm.getDurationId());
                         blm.setDuration(bm.getDuration());
-
                         interest.setText(String.valueOf(bm.getInterest()));
-
-                        cashOnHand.setText("cash On Hand : "+bm.getCashOnHand());
+                        cashOnHand.setText("cash On Hand : " + bm.getCashOnHand());
                         laonamount.getText().clear();
                         intamount.setText("");
                         distursed.setText("");
@@ -353,16 +361,12 @@ public class LoanAddActivity extends AppCompatActivity {
         Button buttonSave = findViewById(R.id.buttonSave);
         buttonSave.setOnClickListener(v -> {
             if (CheckAllFields()) {
-//                blm.setLineTypeId(1);
-//                blm.setLineTypeName(linetype.getText().toString().trim());
                 blm.setDeductedAmount(deducted.getText().toString().trim());
                 blm.setInterestAmount(interest.getText().toString().trim());
                 blm.setLoanAmount(laonamount.getText().toString().trim());
                 blm.setPayableAmount(payable.getText().toString().trim());
                 blm.setDisbursedAmount(distursed.getText().toString().trim());
                 blm.setInterestAmount(intamount.getText().toString().trim());
-                blm.setLoanStatusId(1);
-                blm.setLoanId("");
                 blm.setPayAmount("100.00");
                 postData(blm);
             }
@@ -389,7 +393,7 @@ public class LoanAddActivity extends AppCompatActivity {
             laonamount.setError("Date of expense is required");
             return false;
         }
-        if (disDateStr.length()== 0) {
+        if (disDateStr.length() == 0) {
             disdate.setError("Distribute Date should not be empty");
             return false;
         }
@@ -398,15 +402,18 @@ public class LoanAddActivity extends AppCompatActivity {
     }
 
     OnItemSelectedListener onItemSelectedListener1 =
-            new OnItemSelectedListener(){
+            new OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view,
                                            int position, long id) {
-                    SpinnerModal s = (SpinnerModal)parent.getItemAtPosition(position);
-                    blm.setLoanStatus(s.getValue());
+                    SpinnerModal s = (SpinnerModal) parent.getItemAtPosition(position);
+                    blm.setLoanStatusId(Integer.parseInt(s.getValue()));
+                    blm.setLoanStatus(s.getText());
                 }
+
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {}
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             };
 
     private void postData(BorrowerLoanModal borrowerLoanModal) {
@@ -415,55 +422,58 @@ public class LoanAddActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseModal>() {
             @Override
             public void onResponse(Call<ResponseModal> call, Response<ResponseModal> response) {
-                if(response.code() == 200) {                // this method is called when we get response from our api.
+                if (response.code() == 200) {                // this method is called when we get response from our api.
                     ResponseModal responseFromAPI = response.body();
                     Toast.makeText(LoanAddActivity.this, responseFromAPI.getMessage(), Toast.LENGTH_SHORT).show();
-                    if(responseFromAPI.getStatus() ==1)
-                         finish();
-                }else{
+                    if (responseFromAPI.getStatus() == 1)
+                        finish();
+                } else {
                     Toast.makeText(LoanAddActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseModal> call, Throwable t) {
-                Toast.makeText(LoanAddActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoanAddActivity.this, "failed added to API" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
-        private void getBorrowerList(String body){
-            retrofitAPI = ApiClient.getApiClient();
-            Call call = retrofitAPI.getBorrower(body);
-            call.enqueue(new Callback<ResponseModal>() {
-                @Override
-                public void onResponse(Call<ResponseModal> call, Response<ResponseModal> response) {
-                    if(response.code() == 200) {                // this method is called when we get response from our api.
-                        ResponseModal responseFromAPI = response.body();
-                        b = responseFromAPI.getObject();
-                    }
+    private void getBorrowerList(String body) {
+        retrofitAPI = ApiClient.getApiClient();
+        Call call = retrofitAPI.getBorrower(body);
+        call.enqueue(new Callback<ResponseModal>() {
+            @Override
+            public void onResponse(Call<ResponseModal> call, Response<ResponseModal> response) {
+                if (response.code() == 200) {                // this method is called when we get response from our api.
+                    ResponseModal responseFromAPI = response.body();
+                    b = responseFromAPI.getObject();
                 }
-                @Override
-                public void onFailure(Call<ResponseModal> call, Throwable t) {
-                    Toast.makeText(LoanAddActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            }
 
-    private void getLineList(String body){
+            @Override
+            public void onFailure(Call<ResponseModal> call, Throwable t) {
+                Toast.makeText(LoanAddActivity.this, "failed added to API" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getLineList(String body) {
         retrofitAPI = ApiClient.getApiClient();
         Call<LineModal> call = retrofitAPI.getLine(body);
         call.enqueue(new Callback<LineModal>() {
             @Override
             public void onResponse(Call<LineModal> call, Response<LineModal> response) {
-                if(response.code() == 200) {                // this method is called when we get response from our api.
+                if (response.code() == 200) {                // this method is called when we get response from our api.
                     LineModal responseFromAPI = response.body();
                     lineList = responseFromAPI.getResult();
                 }
             }
+
             @Override
             public void onFailure(Call<LineModal> call, Throwable t) {
-                Toast.makeText(LoanAddActivity.this, "failed added to API"+t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoanAddActivity.this, "failed added to API" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
